@@ -4,84 +4,62 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-    <title>The Wintersmith's blog
+    <title>Nodejs Dersleri 
     </title>
-    <link rel="alternate" href="http://localhost:8080/feed.xml" type="application/rss+xml" title="Ramblings of an immor(t)al demigod">
+    <link rel="alternate" href="http://nodejs-dersleri.github.io/feed.xml" type="application/rss+xml" title="Nodejs için Türkçe kayna, notlar, örnekler">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Anonymous+Pro:400,700,400italic,700italic|Merriweather:400,700,300">
-    <link rel="stylesheet" href="http://localhost:8080/lib/octicons/octicons/octicons.css">
-    <link rel="stylesheet" href="http://localhost:8080/lib/primer-css/css/primer.css">
+    <link rel="stylesheet" href="/lib/primer-css/css/primer.css">
+    <link rel="stylesheet" href="/lib/octicons/octicons/octicons.css">
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
     <header class="header">
-      <div class="content-wrap">
-        <div class="logo">
-          <h1><a href="http://localhost:8080">The Wintersmith's blog</a></h1>
-          <p class="description">Ramblings of an immor(t)al demigod</p>
+      <div class="container">
+        <div class="logo one-fourth column">
+          <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri </a>
+            <!--p.description= locals.description-->
+          </h1>
+        </div>
+        <div class="three-fourths column">
+          <ul role="navigation" class="header-nav">
+            <li><a href="/#">Nodejs Dersleri</a></li>
+            <li><a href="/#">Örnekler</a></li>
+          </ul>
         </div>
       </div>
     </header>
-    <div id="content">
-      <div class="content-wrap">
-        <form>
-          <div class="input-group">
-            <input type="text" placeholder="Username"><span class="input-group-button">
-              <button class="btn"><span class="octicon octicon-clippy"></span></button></span>
+    <div class="container">
+      <div class="columns">
+        <div class="one-fourth column">
+          <nav class="menu"><span class="menu-heading">Beni Başlığı</span><a href="#" class="menu-item selected"><span class="octicon octicon-tools"></span>    Account</a><a href="#" class="menu-item"><span class="octicon octicon-person"></span>    Profile</a><a href="#" class="menu-item"><span class="octicon octicon-mail"></span>    Emails</a><a href="#" class="menu-item"><span class="octicon octicon-radio-tower"></span><span class="counter">3</span>    Notifications</a></nav>
+        </div>
+        <div class="three-fourths column markdown-body">
+          <div class="blankslate"><span class="mega-octicon octicon-git-commit"></span><span class="mega-octicon octicon-tag"></span><span class="mega-octicon octicon-git-branch"></span>
+            <h3>This is a blank slate</h3>
+            <p>Use it to provide information when no dynamic content exists.</p>
           </div>
-        </form>
-        <article class="article intro">
-          <header>
-            <p class="date"><span>30. April 2013</span></p>
-            <h2><a href="/articles/hello-world/">README</a></h2>
-          </header>
-          <section class="content"><p>Welcome to your new blog! This is the default blog template with <span class="caps">RSS</span>, pagination and an archive. There are other templates available – run <code>wintersmith new --help</code> to list&nbsp;them.</p>
+          <article class="article intro">
+            <header>
+              <p class="date"><span>30. October 2015</span></p>
+              <h2><a href="/articles/nodejs-tema-otomasyon/">Nodejs ile proje otomasyon yapımı</a></h2>
+            </header>
+            <section class="content"><p>Proje başlangıçlarında, gereksinimleri ve proje yapısını göz öndünde bulundurarak “structure” nasıl olacak diye düşünürüz bir çok kez. Genellikle de vazgeçilmez alışkanlıklar ya da belirli bir “structure” yapınız vardır. Ama her defasında proje için özelleştirme yapmak&nbsp;gerekir.</p>
 
-            <p class="more"><a href="/articles/hello-world/">more</a></p>
-          </section>
-        </article>
-        <article class="article intro">
-          <header>
-            <p class="date"><span>01. April 2013</span></p>
-            <h2><a href="/articles/red-herring/">A red herring</a></h2>
-          </header>
-          <section class="content"><p>A long time ago, when the world was young – someone put some food on their tongue.
-They tasted the food, and thought it was nice. Most fruit liked it – but banana’s thought&nbsp;twice.</p>
-<p>
-            <p class="more"><a href="/articles/red-herring/">more</a></p>
-          </section>
-        </article>
-        <article class="article intro">
-          <header>
-            <p class="date"><span>01. October 2012</span></p>
-            <h2><a href="/articles/another-test/">Code and stuff!</a></h2>
-          </header>
-          <section class="content"><p>Syntax highlighting with <a href="http://softwaremaniacs.org/soft/highlight/en/">highlight.js</a>.
-The theme used is tomorrow, you can find more themes <a href="http://jmblog.github.io/color-themes-for-highlightjs/">here</a>.</p>
-<p>
-            <p class="more"><a href="/articles/another-test/">more</a></p>
-          </section>
-        </article>
+              <p class="more"><a href="/articles/nodejs-tema-otomasyon/">devamı</a></p>
+            </section>
+          </article>
+        </div>
       </div>
     </div>
-    <footer>
+    <footer class="container footer">
       <div class="content-wrap">
-        <div class="nav"><a href="/archive.html">« Archives</a><a href="/page/2/">Next page »</a>
+        <div class="nav"><a href="/archive.html">« Archives</a>
         </div>
-        <section class="about"><p>Wintersmith is made by <a href="http://johan-nordberg.com">Johan Nordberg</a> and licensed under the <a href="http://opensource.org/licenses/MIT">MIT-license</a>.
-This footer text can be edited in about.md</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur.</p>
-<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-deserunt mollit anim id est laborum.</p>
+        <section class="about"><p>footer</p>
 
         </section>
         <section class="copy">
-          <p>&copy; 2015 Someone &mdash; powered by&nbsp;<a href="https://github.com/jnordberg/wintersmith">Wintersmith</a>
-          </p>
+          <p>&copy; 2015 Arif Cakiroglu</p>
         </section>
       </div>
     </footer>
