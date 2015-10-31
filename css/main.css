@@ -139,6 +139,9 @@ aside a {
 }
 
 aside p {
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
 }
 
 
@@ -154,7 +157,15 @@ main {
 }
 
 article{
-  padding: 5% 10% 200px;
+  padding: 50px 10% 50px;
+}
+
+.markdown-body{
+  padding-bottom: 200px
+}
+
+.markdown-body .content{
+  margin-top: 20px
 }
 
 .project a{
@@ -206,9 +217,7 @@ article{
 
 p.author{
   font-size: 14px;
-  text-transform: uppercase;
   color: #ddd;
-  margin: 0 0 40px
 }
 
 p.author a{
@@ -216,7 +225,7 @@ p.author a{
 }
 
 nav.pagination-post{
-  padding: 5% 10%;
+  padding: 5% 10% 200px;
   font-size: 12px;
   font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
   font-weight: 700;
@@ -256,6 +265,69 @@ footer{
 }
 
 
+
+
+/**
+ * Mobile
+ */
+
+ @media screen and (max-width: 728px) {
+
+     main {
+       width: 100%
+     }
+
+     aside{
+       width: 100%;
+       position: relative;
+       height: 200px;
+       padding: 30px 7%;
+       background-position: 50% 50%;
+     }
+
+     aside canvas{
+       z-index: 1
+     }
+
+     aside h1,
+     aside p{
+       position: relative;
+       z-index: 10
+     }
+
+     article{
+       padding:5% 5% 0
+     }
+
+     h2{
+       font-size: 18px
+     }
+
+     nav.pagination-post{
+       padding-left: 5%
+     }
+
+     footer{
+       text-align: center
+     }
+
+ }
+
+
+ @media screen and (min-width: 728px) and  ( max-width:960px) {
+    aside a {
+      width: 150px;
+      background-size: 150px;
+    }
+    article{
+      padding: 25px 10% 50px;
+    }
+
+    aside{
+      padding: 30px;
+    }
+
+ }
 
 
 /**
