@@ -10,41 +10,63 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
     <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css">
     <link rel="stylesheet" href="/fonts/octicons/octicons.css">
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
     <!-- Begin: Aside-->
-    <aside>
+    <aside id="particles-js">
       <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri</a></h1>
       <p>Nodejs için Türkçe kayna, notlar, örnekler</p>
     </aside>
     <!-- End: Aside-->
     <!-- Begin: Content-->
     <main> 
-      <section class="archive">
-        <h2>Archive</h2>
-        <ul>
-          <li><span style="line-height:6.6000000000000005em" class="year-label">2015</span>
-            <ul style="margin-left:4em">
-              <li><span style="line-height:6.6000000000000005em" class="month-label">October</span>
-                <ul style="margin-left:7em">
-                  <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test/">Nodejs ile proje otomasyon yapımı</a></li>
-                  <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test-3/">Nodejs ile proje otomasyon yapımı</a></li>
-                  <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test-2/">Nodejs ile proje otomasyon yapımı</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </section>
+      <article class="article">
+        <section class="archive">
+          <h2>Archive</h2>
+          <ul>
+            <li><span style="line-height:4.4em" class="year-label">2015</span>
+              <ul style="margin-left:1em">
+                <li><span style="line-height:4.4em" class="month-label">October</span>
+                  <ul style="margin-left:3em">
+                    <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test/">Nodejs ile proje otomasyon yapımı</a></li>
+                    <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test-2/">Nodejs ile proje otomasyon yapımı</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><span style="line-height:2.2em" class="year-label">2014</span>
+              <ul style="margin-left:1em">
+                <li><span style="line-height:2.2em" class="month-label">October</span>
+                  <ul style="margin-left:3em">
+                    <li style="height:2.2em;line-height:2.2em"><a href="/articles/nodejs-tema-otomasyon-test-3/">Nodejs ile proje otomasyon yapımı</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </article>
       <!-- Begin: Footer-->
-      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
-        <!--section.about//!=contents['about.md'].html
-        -->
-      </footer>
-      <!-- End: Footer-->
+      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascript/particles.min.js"></script>
+    <script src="/javascript/canvas.js"></script>
+    <script src="/lib/highlight/highlight.pack.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+      
+          //section.about
+            //!=contents['about.md'].html
+      // End: Footer
+    </script>
     <!-- End: Content-->
     
   </body>

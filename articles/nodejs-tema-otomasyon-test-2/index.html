@@ -10,22 +10,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
     <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css">
     <link rel="stylesheet" href="/fonts/octicons/octicons.css">
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body class="article-detail">
     <!-- Begin: Aside-->
-    <aside>
+    <aside id="particles-js">
       <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri</a></h1>
       <p>Nodejs için Türkçe kayna, notlar, örnekler</p>
     </aside>
     <!-- End: Aside-->
     <!-- Begin: Content-->
     <main> 
-      <article class="article three-fourths column markdown-body">
+      <article class="article column markdown-body">
         <h2>Nodejs ile proje otomasyon yapımı</h2>
         <p class="author"><span class="octicon octicon-pencil"> </span> <span class="author"><a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
-        </p>
+        </p><br><br><br><br>
         <section class="content"><p>Proje başlangıçlarında, üğşçsı gereksinimleri ve proje yapısını göz öndünde bulundurarak “structure” nasıl olacak diye düşünürüz bir çok kez. Genellikle de vazgeçilmez alışkanlıklar ya da belirli bir “structure” yapınız vardır. Ama her defasında proje için özelleştirme yapmak&nbsp;gerekir.</p>
 <hr>
 <p>Örneğin: Bir node modulu yapıyorsanız, readme için şöyle bir şeye ihtiyaç&nbsp;duyabilirsiniz.</p>
@@ -74,12 +75,23 @@
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
       </article>
       <!-- Begin: Footer-->
-      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
-        <!--section.about//!=contents['about.md'].html
-        -->
-      </footer>
-      <!-- End: Footer-->
+      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascript/particles.min.js"></script>
+    <script src="/javascript/canvas.js"></script>
+    <script src="/lib/highlight/highlight.pack.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+      
+          //section.about
+            //!=contents['about.md'].html
+      // End: Footer
+    </script>
     <!-- End: Content-->
     
   </body>

@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
     <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css">
     <link rel="stylesheet" href="/fonts/octicons/octicons.css">
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
     <!-- Begin: Aside-->
-    <aside>
+    <aside id="particles-js">
       <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri</a></h1>
       <p>Nodejs için Türkçe kayna, notlar, örnekler</p>
     </aside>
@@ -24,22 +25,33 @@
     <main> 
       <article>
         <header>
-          <h2><a href="/articles/nodejs-tema-otomasyon-test-2/">Nodejs ile proje otomasyon yapımı</a></h2>
+          <h2><a href="/articles/nodejs-tema-otomasyon-test-3/">Nodejs ile proje otomasyon yapımı</a></h2>
         </header>
         <section class="content"><p>Proje başlangıçlarında, üğşçsı gereksinimleri ve proje yapısını göz öndünde bulundurarak “structure” nasıl olacak diye düşünürüz bir çok kez. Genellikle de vazgeçilmez alışkanlıklar ya da belirli bir “structure” yapınız vardır. Ama her defasında proje için özelleştirme yapmak&nbsp;gerekir.</p>
 <span class="octicon octicon-calendar"></span>
-          <time datetime="2015-10-30">30. Oct 2015</time>
+          <time datetime="2014-10-30">30. Oct 2014</time>
         </section>
       </article>
       <nav role="navigation" class="pagination-post"><a href="/">← Önceki sayfa</a>
       </nav>
       <!-- Begin: Footer-->
-      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
-        <!--section.about//!=contents['about.md'].html
-        -->
-      </footer>
-      <!-- End: Footer-->
+      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascript/particles.min.js"></script>
+    <script src="/javascript/canvas.js"></script>
+    <script src="/lib/highlight/highlight.pack.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+      
+          //section.about
+            //!=contents['about.md'].html
+      // End: Footer
+    </script>
     <!-- End: Content-->
     
   </body>
