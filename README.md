@@ -1,6 +1,9 @@
 # Nodejs için Türkçe kaynak, notlar, örnekler
 
-## ✓ Planlanan Konular
+
+Sizde bir içerik girmek isterseniz [buradan](https://github.com/nodejs-dersleri/nodejs-dersleri-generator) devam edin. 
+
+##  Planlanan Konular
 * − Nodejs modullerinin tanıtımı & örnekleri
 * − Npm modül yapımı
 * − Nodejs ile otomasyon yapmak
@@ -8,4 +11,4 @@
 * - Electron ile npm modulü kullanımı
 * - Nodejs işlerinize yardımcı olacak Makefile dosyası & komutlar
 * − Nodejs ile test yazımı
-* − Nodejs ile screen scraping(browser gibi site okuma)
+* ✓ Nodejs ile screen scraping(browser gibi site okuma)
