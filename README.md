@@ -1,4 +1,4 @@
-# Nodejs için Türkçe kaynak, notlar, örnekler
+# Nodejs için Türkçe kaynak, notlar, örnekler uygulamalar
 
 
 Sizde bir içerik girmek isterseniz [buradan](https://github.com/nodejs-dersleri/nodejs-dersleri-generator) devam edin. 
