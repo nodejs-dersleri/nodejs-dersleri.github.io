@@ -10,7 +10,7 @@ body{
   line-height: 1.65;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Noto Serif', serif;
+  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
 }
 
 a{
@@ -19,7 +19,7 @@ a{
 }
 
 a:hover{
-
+  
 }
 
 *{
@@ -38,7 +38,7 @@ hr{
 time{
   font-size: 12px;
   text-transform: uppercase;
-  color: #b1b1b1
+  color: #555
 }
 
 h2, h3 {
@@ -95,9 +95,12 @@ pre{
 }
 
 article img {
-  min-width: 100%
+  max-width: 100%
 }
 
+.clear {
+    clear: both
+}
 
 /**
  *  Aside
@@ -241,7 +244,7 @@ nav.pagination-post a{
 }
 
 .content .octicon-calendar{
-  color:#b1b1b1
+  color:#444
 }
 
 #disqus_thread{

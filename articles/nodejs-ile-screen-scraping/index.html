@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width">
     <title>Nodejs ile screen scraping - Nodejs Dersleri
     </title>
+    <!-- begin :og block-->
+    <meta property="og:title" content="Nodejs ile screen scraping">
+    <meta property="og:site_name" content="Nodejs Dersleri">
+    <meta property="og:url" content="http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/">
+    <meta property="og:image" content="http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png">
+    <!-- begin :og block-->
     <link rel="alternate" href="http://nodejs-dersleri.github.io/feed.xml" type="application/rss+xml" title="NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
@@ -28,28 +34,23 @@
         <p class="author"><span class="octicon octicon-pencil"> </span> <span class="author"><a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
         </p>
         <section class="project blankslate">
-          <p><span class="octicon octicon-comment"></span>Npm sitesinden module ismini girerek dataylarını çekmek
+          <p><span class="octicon octicon-comment"></span>Amaç: Npm sitesinden modül ismini girerek dataylarını çekmek
           </p><a href="https://github.com/nodejs-dersleri/screen-scraping" class="btn btn-primary"><span class="octicon octicon-mark-github"></span>Kaynak kod</a>
         </section>
         <div class="dependencies"><span class="octicon octicon-tag"> </span><code><a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/request">request</a></code><code><a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/cheerio">cheerio</a></code>
         </div><br>
-        <section class="content"><p>Herhangi bir siteden istediğiniz verileri jQuery core komutlarıyla alabilirsiniz. Bunun için <code>request</code>ve <code>cheerio</code> kullanacağız.</p>
+        <section class="content"><p>Herhangi bir siteden istediğiniz verileri jQuery core komutlarıyla alabilirsiniz. Bunun için <code>request</code> ve <code>cheerio</code> npm modullerini&nbsp;kullanacağız.</p>
+<p><code>request</code> ile indirdiğimiz datayı <code>cheerio</code> kullanarak jQuery gibi işlem&nbsp;yapacağız.</p>
 <hr>
-<p>packages.json</p>
+<h3 id="packages-json">packages.json</h3>
 <pre><code>{
   &quot;name&quot;: &quot;screen-scraping&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
   &quot;description&quot;: &quot;Nodejs ile screen scraping&quot;,
   &quot;main&quot;: &quot;index.js&quot;,
   &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;node index.js&quot;,
-    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+    &quot;start&quot;: &quot;node index.js&quot;
   },
-  &quot;keywords&quot;: [
-    &quot;nodejs&quot;,
-    &quot;screen&quot;,
-    &quot;scrapping&quot;
-  ],
   &quot;author&quot;: &quot;Arif Cakiroglu &lt;cakirogluarif@gmail.com&gt; (http://www.arifcakiroglu.com)&quot;,
   &quot;license&quot;: &quot;ISC&quot;,
   &quot;dependencies&quot;: {
@@ -58,13 +59,14 @@
   }
 }
 </code></pre><p><code>packages.json</code> dosyasını oluşturduktan sonra <code>npm install</code> komutunu&nbsp;çalıştırıyoruz.</p>
-<p>Npm modulleri proje dosyamıza inecektir. Daha sonra <code>index.js</code> dosyası&nbsp;oluşturuyoruz.</p>
+<p>Npm modulleri proje dosyamıza node_modules klasörüne inecektir. Daha sonra <code>index.js</code> dosyası&nbsp;oluşturuyoruz.</p>
 <h3 id="index-js">index.js</h3>
 <p>Öncelikle node modullerimizi&nbsp;çağırıyoruz.</p>
 <pre><code>
 var request = require(&#39;request&#39;);
 var cheerio = require(&#39;cheerio&#39;);
 </code></pre><p>Url olarak static bir url ekliyorum: <code>var url = &#39;https://www.npmjs.com/package/q&#39;;</code></p>
+<p>Url sonundaki ‘q’ yerine herhangi bir npm modulü&nbsp;yazabilirsiniz.</p>
 <pre><code>request(url, function(error, response, html){
   if(!error){
     // request ile çağırdığımız urlden gelen html datayı &#39;$&#39; olarak yeniden tanımlıyoruz.
@@ -72,13 +74,12 @@ var cheerio = require(&#39;cheerio&#39;);
 
     // Çıktı için json objesi oluşturuyorum
     var json = {};
-
   }
 });
 </code></pre><p>cheerio modulü hakkında daha fazla bilgi almak için <a href="https://github.com/cheeriojs/cheerio">reposu</a></p>
-<pre><code>/* Module isminin bulunduğu yeri inspectElement ile bulup alıyorum.
+<pre><code>/* Modül isminin bulunduğu yeri inspectElement ile bulup alıyorum.
  * .package-name class&#39;ını seçiyorum ve datasını json objesine title olarak atıyorum
- * daha sonra bu datayı console.log() ile yazıdracağız
+ * daha sonra bu datayı console.log() ile yazdıracağız.
  */
 
 $(&#39;.package-name&#39;).filter(function(){
@@ -90,26 +91,37 @@ console.log(JSON.stringify(json, null, 4));
 </code></pre><p>ve çıktı olarak name’ini&nbsp;alıyoruz</p>
 <p><img src="/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png" alt="ilk çıktımız"></p>
 <p>description, repository ve toplam download sayısını da&nbsp;alıyoruz</p>
-<pre><code>$(&#39;.package-description&#39;).filter(function(){
+<pre><code>
+// Description
+$(&#39;.package-description&#39;).filter(function(){
   json.desc = $(this).text().trim()
 });
 
+
+// Repository
 $(&#39;.box li&#39;).eq(2).filter(function(){
   json.repo = $(this).text().trim()
 });
 
+
+// Total download
 $(&#39;.collaborators&#39;).next().next().filter(function(){
     json.stats = $(this).children().eq(2).text().replace(/\s+/g, &#39; &#39;).trim();
 });
 </code></pre><p><img src="/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png" alt="ikinci çıktımız"></p>
 <p>Kısaca cheerio kullanarak screen scraping için basit bir örnek&nbsp;oluşturduk.</p>
 <p>Daha sonrası için <a href="http://phantomjs.org/">phanthopjs</a> ile bir uygulama yapacağız. Yazınca buray ekleyeceğim&nbsp;linkini.</p>
+<h3 id="okudu-unuz-i-in-te-ekk-r-ederim-">Okuduğunuz için teşekkür&nbsp;ederim.</h3>
+<ul>
+<li><a href="https://github.com/nodejs-dersleri">Tüm Github&nbsp;repositorileri</a></li>
+</ul>
 <hr>
 </section>
         <div id="disqus_thread"> </div>
         <script>
+          - var pageUrl = locals.url + '/'+ page.url
           var disqus_config = function () {
-          this.page.url = 'http://nodejs-dersleri.github.io//articles/nodejs-ile-screen-scraping/';
+          this.page.url = 'http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/';
           this.page.identifier = '/articles/nodejs-ile-screen-scraping/'; 
           };
           
