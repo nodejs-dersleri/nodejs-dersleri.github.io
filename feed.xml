@@ -10,58 +10,15 @@
     <language>en</language>
     <item>
       <title>Nodejs ile proje otomasyon yapımı</title>
-      <link>http://nodejs-dersleri.github.io/articles/nodejs-tema-otomasyon-test/</link>
+      <link>http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</link>
       <pubDate>Fri, 30 Oct 2015 12:10:00 +0200</pubDate>
-      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-tema-otomasyon-test/</guid>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</guid>
       <author></author>
-      <description>&lt;p&gt;Proje başlangıçlarında, üğşçsı gereksinimleri ve proje yapısını göz öndünde bulundurarak “structure” nasıl olacak diye düşünürüz bir çok kez. Genellikle de vazgeçilmez alışkanlıklar ya da belirli bir “structure” yapınız vardır. Ama her defasında proje için özelleştirme yapmak gerekir.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Örneğin: Bir node modulu yapıyorsanız, readme  &lt;code&gt;Grunt&lt;/code&gt; için şöyle bir şeye ihtiyaç duyabilirsiniz.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// bad&lt;/span&gt;
-&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; count = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;
-&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;) {
-  count += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;
-}
-&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;arif&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;{
-
-}
-&lt;span class=&quot;comment&quot;&gt;// good, use the let.&lt;/span&gt;
-&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; count = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;
-&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;) {
-  count += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;features&quot;&gt;Features&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;themable with CSS&lt;/li&gt;
-&lt;li&gt;scriptable with JavaScript&lt;/li&gt;
-&lt;li&gt;keyboard shortcuts and mapping&lt;/li&gt;
-&lt;li&gt;third-party plugin support&lt;/li&gt;
-&lt;li&gt;entirely built with web technologies for extensibility&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt; body {
-   background: #eee;
-   color: #888;
- }
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
-&lt;p&gt;  TODO: when we have distribution set up&lt;/p&gt;
-&lt;h3 id=&quot;about&quot;&gt;About&lt;/h3&gt;
-&lt;p&gt; Slate is/was a single day hack project that was intended to be a kickstarter, however I ran out of time so now it’s a partially-implemented IRC client! I had pretty lofty goals but unfortunately there’s not enough time to go around, there are still many features missing, and it’s not quite in a usable state, but with some community interest and love maybe it will get there some day! If not at least some useful/clean IRC libs are available at &lt;a href=&quot;https://github.com/slate&quot;&gt;https://github.com/slate&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt; Conceptually I really just wanted a clean, minimalistic IRC client, completely extensible through plugins. Ideally most of the core is written using such plugins. The entire thing should be themable, and the default theme should be programmer-friendly, aka get all the clutter out of my way, I just want to see chat logs.&lt;/p&gt;
-&lt;h3 id=&quot;usage&quot;&gt;Usage&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;press &lt;code&gt;?&lt;/code&gt; to display the shortcut dialog&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;building&quot;&gt;Building&lt;/h3&gt;
-&lt;p&gt; Install node, &lt;a href=&quot;https://github.com/rogerwang/node-webkit&quot;&gt;node-webkit&lt;/a&gt; and clone the repo.&lt;/p&gt;
-&lt;p&gt; Build and run with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ make
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;  Build with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ make build
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;  Continuous build with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ watch make build
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;license&quot;&gt;License&lt;/h3&gt;
-&lt;p&gt;  MIT&lt;/p&gt;
+      <description>&lt;h1 id=&quot;nodejs-ile-screen-scraping&quot;&gt;Nodejs ile screen scraping&lt;/h1&gt;
+&lt;h2 id=&quot;npm-packages-&quot;&gt;Npm packages:&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;var request = require(&amp;#39;request&amp;#39;);
+var cheerio = require(&amp;#39;cheerio&amp;#39;);
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
 </description>
     </item>
   </channel>
