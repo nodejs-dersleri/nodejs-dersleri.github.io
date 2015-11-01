@@ -5,9 +5,122 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Sun, 01 Nov 2015 16:00:00 +0200</pubDate>
+    <pubDate>Mon, 02 Nov 2015 00:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Npm modül yapımı 1</title>
+      <link>http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/</link>
+      <pubDate>Mon, 02 Nov 2015 00:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/</guid>
+      <author></author>
+      <description>&lt;p&gt;Npm için yapacağımız bu modül her çağırdığımızda bize benzersiz ID’ler üretecek. Modülümüzü oluşturduktan sonra küçük bir test yazaıp onaydan geçirdikten sonra npm sitesine kayıt işlemini yapalım.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;yap-lacaklar&quot;&gt;Yapılacaklar&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Modülü oluşturalım&lt;/li&gt;
+&lt;li&gt;Basit bir test yazalım&lt;/li&gt;
+&lt;li&gt;Modulü npm sitesine kayıt ettirelim&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Npm init yaparak başlayalım. proje dosyası oluşturup terminalden klasöre erilim daha sonra &lt;code&gt;npm init&lt;/code&gt; yaparak başlayalım.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modülünüzün ismini, açıklamasını, versiyonunu .etc girdikten sonra packages.json dosyamızı oluşturduk.&lt;/p&gt;
+&lt;h3 id=&quot;packages-json&quot;&gt;packages.json&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;guidfy&amp;quot;,
+  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;Globally unique identifier&amp;quot;,
+  &amp;quot;main&amp;quot;: &amp;quot;index.js&amp;quot;,
+  &amp;quot;scripts&amp;quot;: {
+    &amp;quot;test&amp;quot;: &amp;quot;mocha -R spec -u tdd tests/*.js&amp;quot;
+  },
+  &amp;quot;devDependencies&amp;quot;: {
+    &amp;quot;mocha&amp;quot;: &amp;quot;~1.14.0&amp;quot;,
+    &amp;quot;should&amp;quot;: &amp;quot;^7.1.1&amp;quot;
+  },
+  &amp;quot;repository&amp;quot;: {
+    &amp;quot;type&amp;quot;: &amp;quot;git&amp;quot;,
+    &amp;quot;url&amp;quot;: &amp;quot;git+https://github.com/arifcakiroglu/guidify.git&amp;quot;
+  },
+  &amp;quot;keywords&amp;quot;: [
+    &amp;quot;unique&amp;quot;,
+    &amp;quot;id&amp;quot;,
+    &amp;quot;unique&amp;quot;,
+    &amp;quot;guid&amp;quot;,
+    &amp;quot;guidify&amp;quot;
+  ],
+  &amp;quot;author&amp;quot;: &amp;quot;Arif Cakiroglu &amp;lt;cakirogluarif@gmail.com&amp;gt;&amp;quot;,
+  &amp;quot;license&amp;quot;: &amp;quot;MIT&amp;quot;,
+  &amp;quot;bugs&amp;quot;: {
+    &amp;quot;url&amp;quot;: &amp;quot;https://github.com/arifcakiroglu/guidify/issues&amp;quot;
+  },
+  &amp;quot;homepage&amp;quot;: &amp;quot;https://github.com/arifcakiroglu/guidify#readme&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;index-js&quot;&gt;index.js&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;module.exports= function(){
+  // Anlık tarihi alıp d değişkenine atıyoruz.
+  var d = new Date().getTime();
+
+  // &amp;#39;xxx&amp;#39; uzunluğunda bir çıktı üreteceğiz.
+  var guid = &amp;#39;xxxxxxxxxxxxxxxxxxxx&amp;#39;.replace(/[x]/g, function(c) {
+    var r = (d + Math.random()*16)%16 | 0;
+    d = Math.floor(d/16);
+    return (c==&amp;#39;x&amp;#39; ? r : (r&amp;amp;0x3|0x8)).toString(16);
+  });
+
+  // Test edelim çalışıyoru mu diye
+  // console.log(&amp;quot;Bu ilk guid&amp;#39;imiz %s&amp;quot;,guid);
+  return guid
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modülümüzün index dosyasını oluşturduk çalışıp çalışmadığını görmek için &lt;code&gt;app.js&lt;/code&gt; dosyası oluşturup modülümüzü çağıracağız&lt;/p&gt;
+&lt;h3 id=&quot;app-js&quot;&gt;app.js&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;// şimdilik denemek için ./index.js olarak çağırıyoruz npm&amp;#39;e kayıt ettirmeden önce app.js dosyasını sileceğiz
+
+var guidify = require(&amp;quot;./index.js&amp;quot;);
+console.log(&amp;quot;Bu ilk guid&amp;#39;imiz %s&amp;quot;, guidify());
+
+// Çıktımız bu şekilde oldu. Her denemede farklı bir çıktı alacağız.
+// Bu ilk guid&amp;#39;imiz 18dc1f7c0373d09bdc1a
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/npm-modul-yapimi-1/log.png&quot; alt=&quot;ilk çıktı&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Şimdi ise bir test yazalım.&lt;/p&gt;
+&lt;p&gt;Bunun için &lt;code&gt;/tests&lt;/code&gt; klasörü açıtorum içerisine &lt;code&gt;guidify.js&lt;/code&gt; dosyamı oluşturuyorum.&lt;/p&gt;
+&lt;h3 id=&quot;guidify-js&quot;&gt;guidify.js&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;/**
+ * Module dependencies.
+ */
+
+ // bir üst dizindeki moduülümüzü çağırıyoruz
+var Guidify = require(&amp;#39;../index.js&amp;#39;);
+var assert = require(&amp;#39;assert&amp;#39;);
+
+suite(&amp;#39;\033[36m Test guid yaratıcı \033[90m&amp;#39;, function() {
+  test(&amp;#39;unique&amp;#39;, function(done) {
+    var guid = Guidify();
+    assert.equal(typeof(guid), &amp;#39;string&amp;#39;, &amp;#39;Should return a string&amp;#39; );
+    assert.equal(guid.length, 20, &amp;#39;Should return a string with length 20&amp;#39; );
+    done();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;makefile&quot;&gt;Makefile&lt;/h3&gt;
+&lt;p&gt;Terminalden &lt;code&gt;make test&lt;/code&gt; ya da &lt;code&gt;npm test&lt;/code&gt; yazarak testimizi çalıştırıyoruz.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-modul-yapimi-1/test.png&quot; alt=&quot;test&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Makefile’ın ne olduğunu ve detaylarını başka bir makalede açıklayacapım. (yazınca buraya linkini eklerim söz)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;install: package.json
+    @npm install
+
+test:
+    @./node_modules/.bin/mocha -u tdd
+
+.PHONY: test
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;npm-kay-t&quot;&gt;Npm kayıt&lt;/h3&gt;
+&lt;p&gt;Geç oldu buna yarın devam ederim :)&lt;/p&gt;
+&lt;h3 id=&quot;okudu-unuz-i-in-te-ekk-r-ederim-&quot;&gt;Okuduğunuz için teşekkür ederim.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/nodejs-dersleri&quot;&gt;Tüm Github repositorileri&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Nodejs ile screen scraping</title>
       <link>http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</link>
