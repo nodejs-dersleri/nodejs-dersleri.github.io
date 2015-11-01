@@ -6,7 +6,7 @@ Sizde bir içerik girmek isterseniz [buradan](https://github.com/nodejs-dersleri
 ##  Planlanan Konular
 * ✓ [Nodejs ile screen scraping](http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/) 
 * − Nodejs modullerinin tanıtımı & örnekleri `hazırlanıyor`
-* − Npm modül yapımı
+* ✓ [Npm modül yapımı](http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/)
 * − Nodejs ile otomasyon yapmak
 * − Nodejs cli yapımı 
 * − Yeoman gibi bir bir otomasyon yapalım hadi
