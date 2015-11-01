@@ -88,7 +88,7 @@ $(&#39;.package-name&#39;).filter(function(){
 
 console.log(JSON.stringify(json, null, 4));
 </code></pre><p>ve çıktı olarak name’ini&nbsp;alıyoruz</p>
-<p><img src="https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png" alt="ilk çıktımız"></p>
+<p><img src="/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png" alt="ilk çıktımız"></p>
 <p>description, repository ve toplam download sayısını da&nbsp;alıyoruz</p>
 <pre><code>$(&#39;.package-description&#39;).filter(function(){
   json.desc = $(this).text().trim()
@@ -101,7 +101,7 @@ $(&#39;.box li&#39;).eq(2).filter(function(){
 $(&#39;.collaborators&#39;).next().next().filter(function(){
     json.stats = $(this).children().eq(2).text().replace(/\s+/g, &#39; &#39;).trim();
 });
-</code></pre><p><img src="https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png" alt="ikinci çıktımız"></p>
+</code></pre><p><img src="/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png" alt="ikinci çıktımız"></p>
 <p>Kısaca cheerio kullanarak screen scraping için basit bir örnek&nbsp;oluşturduk.</p>
 <p>Daha sonrası için <a href="http://phantomjs.org/">phanthopjs</a> ile bir uygulama yapacağız. Yazınca buray ekleyeceğim&nbsp;linkini.</p>
 <hr>

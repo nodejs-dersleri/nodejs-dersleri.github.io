@@ -69,7 +69,7 @@ $(&amp;#39;.package-name&amp;#39;).filter(function(){
 
 console.log(JSON.stringify(json, null, 4));
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ve çıktı olarak name’ini alıyoruz&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png&quot; alt=&quot;ilk çıktımız&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png&quot; alt=&quot;ilk çıktımız&quot;&gt;&lt;/p&gt;
 &lt;p&gt;description, repository ve toplam download sayısını da alıyoruz&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$(&amp;#39;.package-description&amp;#39;).filter(function(){
   json.desc = $(this).text().trim()
@@ -82,7 +82,7 @@ $(&amp;#39;.box li&amp;#39;).eq(2).filter(function(){
 $(&amp;#39;.collaborators&amp;#39;).next().next().filter(function(){
     json.stats = $(this).children().eq(2).text().replace(/\s+/g, &amp;#39; &amp;#39;).trim();
 });
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png&quot; alt=&quot;ikinci çıktımız&quot;&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png&quot; alt=&quot;ikinci çıktımız&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Kısaca cheerio kullanarak screen scraping için basit bir örnek oluşturduk.&lt;/p&gt;
 &lt;p&gt;Daha sonrası için &lt;a href=&quot;http://phantomjs.org/&quot;&gt;phanthopjs&lt;/a&gt; ile bir uygulama yapacağız. Yazınca buray ekleyeceğim linkini.&lt;/p&gt;
 &lt;hr&gt;
