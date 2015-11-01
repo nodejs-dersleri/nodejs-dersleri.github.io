@@ -94,6 +94,10 @@ pre{
   display: block;
 }
 
+article img {
+  min-width: 100%
+}
+
 
 /**
  *  Aside

@@ -5,20 +5,87 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Fri, 30 Oct 2015 12:10:00 +0200</pubDate>
+    <pubDate>Sun, 01 Nov 2015 16:00:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>Nodejs ile proje otomasyon yapımı</title>
+      <title>Nodejs ile screen scraping</title>
       <link>http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</link>
-      <pubDate>Fri, 30 Oct 2015 12:10:00 +0200</pubDate>
+      <pubDate>Sun, 01 Nov 2015 16:00:00 +0200</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</guid>
       <author></author>
-      <description>&lt;h1 id=&quot;nodejs-ile-screen-scraping&quot;&gt;Nodejs ile screen scraping&lt;/h1&gt;
-&lt;h2 id=&quot;npm-packages-&quot;&gt;Npm packages:&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;var request = require(&amp;#39;request&amp;#39;);
+      <description>&lt;p&gt;Herhangi bir siteden istediğiniz verileri jQuery core komutlarıyla alabilirsiniz. Bunun için &lt;code&gt;request&lt;/code&gt;ve &lt;code&gt;cheerio&lt;/code&gt; kullanacağız.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;packages.json&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;screen-scraping&amp;quot;,
+  &amp;quot;version&amp;quot;: &amp;quot;1.0.0&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;Nodejs ile screen scraping&amp;quot;,
+  &amp;quot;main&amp;quot;: &amp;quot;index.js&amp;quot;,
+  &amp;quot;scripts&amp;quot;: {
+    &amp;quot;start&amp;quot;: &amp;quot;node index.js&amp;quot;,
+    &amp;quot;test&amp;quot;: &amp;quot;echo \&amp;quot;Error: no test specified\&amp;quot; &amp;amp;&amp;amp; exit 1&amp;quot;
+  },
+  &amp;quot;keywords&amp;quot;: [
+    &amp;quot;nodejs&amp;quot;,
+    &amp;quot;screen&amp;quot;,
+    &amp;quot;scrapping&amp;quot;
+  ],
+  &amp;quot;author&amp;quot;: &amp;quot;Arif Cakiroglu &amp;lt;cakirogluarif@gmail.com&amp;gt; (http://www.arifcakiroglu.com)&amp;quot;,
+  &amp;quot;license&amp;quot;: &amp;quot;ISC&amp;quot;,
+  &amp;quot;dependencies&amp;quot;: {
+    &amp;quot;cheerio&amp;quot;: &amp;quot;^0.19.0&amp;quot;,
+    &amp;quot;request&amp;quot;: &amp;quot;^2.65.0&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;packages.json&lt;/code&gt; dosyasını oluşturduktan sonra &lt;code&gt;npm install&lt;/code&gt; komutunu çalıştırıyoruz.&lt;/p&gt;
+&lt;p&gt;Npm modulleri proje dosyamıza inecektir. Daha sonra &lt;code&gt;index.js&lt;/code&gt; dosyası oluşturuyoruz.&lt;/p&gt;
+&lt;h3 id=&quot;index-js&quot;&gt;index.js&lt;/h3&gt;
+&lt;p&gt;Öncelikle node modullerimizi çağırıyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+var request = require(&amp;#39;request&amp;#39;);
 var cheerio = require(&amp;#39;cheerio&amp;#39;);
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Url olarak static bir url ekliyorum: &lt;code&gt;var url = &amp;#39;https://www.npmjs.com/package/q&amp;#39;;&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;request(url, function(error, response, html){
+  if(!error){
+    // request ile çağırdığımız urlden gelen html datayı &amp;#39;$&amp;#39; olarak yeniden tanımlıyoruz.
+    var $ = cheerio.load(html);
+
+    // Çıktı için json objesi oluşturuyorum
+    var json = {};
+
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;cheerio modulü hakkında daha fazla bilgi almak için &lt;a href=&quot;https://github.com/cheeriojs/cheerio&quot;&gt;reposu&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/* Module isminin bulunduğu yeri inspectElement ile bulup alıyorum.
+ * .package-name class&amp;#39;ını seçiyorum ve datasını json objesine title olarak atıyorum
+ * daha sonra bu datayı console.log() ile yazıdracağız
+ */
+
+$(&amp;#39;.package-name&amp;#39;).filter(function(){
+  json.title = $(this).text().trim()
+});
+
+
+console.log(JSON.stringify(json, null, 4));
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ve çıktı olarak name’ini alıyoruz&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-1.png&quot; alt=&quot;ilk çıktımız&quot;&gt;&lt;/p&gt;
+&lt;p&gt;description, repository ve toplam download sayısını da alıyoruz&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;.package-description&amp;#39;).filter(function(){
+  json.desc = $(this).text().trim()
+});
+
+$(&amp;#39;.box li&amp;#39;).eq(2).filter(function(){
+  json.repo = $(this).text().trim()
+});
+
+$(&amp;#39;.collaborators&amp;#39;).next().next().filter(function(){
+    json.stats = $(this).children().eq(2).text().replace(/\s+/g, &amp;#39; &amp;#39;).trim();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://github.com/nodejs-dersleri/nodejs-dersleri.github.io/blob/master/articles/nodejs-ile-screen-scraping/nodejs-ile-screen-scraping-2.png&quot; alt=&quot;ikinci çıktımız&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Kısaca cheerio kullanarak screen scraping için basit bir örnek oluşturduk.&lt;/p&gt;
+&lt;p&gt;Daha sonrası için &lt;a href=&quot;http://phantomjs.org/&quot;&gt;phanthopjs&lt;/a&gt; ile bir uygulama yapacağız. Yazınca buray ekleyeceğim linkini.&lt;/p&gt;
+&lt;hr&gt;
 </description>
     </item>
   </channel>
