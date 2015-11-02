@@ -5,9 +5,79 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Mon, 02 Nov 2015 00:30:00 +0200</pubDate>
+    <pubDate>Tue, 03 Nov 2015 23:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Npm modulleri - Inquirerjs nedir?</title>
+      <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-inquirerjs-nedir/</link>
+      <pubDate>Tue, 03 Nov 2015 23:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-inquirerjs-nedir/</guid>
+      <author></author>
+      <description>&lt;p&gt;Yeoman ile proje oluşturduğumuzda ya da &lt;code&gt;npm init&lt;/code&gt; yaptığımızda karşımıza bazı sorular gelir. Inquirerjs’le tam olarak bunu yapcağız.&lt;/p&gt;
+&lt;p&gt;Kullanıcıya bazı sorular sorup cevaplarına göre işlem yapacağız.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/qGWs6qI4sw8&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/qGWs6qI4sw8/0.jpg&quot; alt=&quot;Nodejs dersleri&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;package-json&quot;&gt;package.json&lt;/h3&gt;
+&lt;p&gt;Npm init ile başlıyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;package.json dosyamız oluştu.&lt;/p&gt;
+&lt;h3 id=&quot;index-js&quot;&gt;index.js&lt;/h3&gt;
+&lt;p&gt;Şimdi &lt;code&gt;index.js&lt;/code&gt; dosyası oluşturuyoruz.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-inquirerjs-nedir/main.png&quot; alt=&quot;main.js&quot;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// inquirer modülünü çağırıyoruz
+var inquirer = require(&amp;#39;inquirer&amp;#39;);
+
+// gelen veriye göre bir dosya oluşturacağız bunun içinde `fs` modülünü kullanacağız.
+var fs = require(&amp;#39;fs&amp;#39;);
+
+// Sorularımızı oluşturuyoruz
+
+var  questions = [
+  {
+    type: &amp;quot;input&amp;quot;,
+    name: &amp;quot;name&amp;quot;,
+    message: &amp;quot;Project name?&amp;quot;
+  },
+  {
+    type: &amp;quot;list&amp;quot;,
+     name: &amp;quot;main&amp;quot;,
+     message: &amp;quot;Main file&amp;quot;,
+     choices: [ &amp;quot;app.js&amp;quot;, &amp;quot;app2.js&amp;quot;, &amp;quot;npm.js&amp;quot; ],
+  },
+  {
+      type: &amp;quot;password&amp;quot;,
+      name : &amp;#39;checkbox&amp;#39;,
+      message : &amp;#39;Password&amp;#39;
+  }
+];
+
+// şimdi inquirerjs&amp;#39;i çalıştırıyoruz
+
+
+
+inquirer.prompt(questions, function( answers ) {
+
+  // Eğer main dosyası var ise fs ile, seçilen dosyayı oluşturacağız
+  if(answers.main){
+
+      // @ oluşturulacak dosya
+      // @ dosyaya yazacağımız data
+      // @ işlem sonucu
+      fs.writeFile(answers.main, &amp;#39;var main =&amp;quot;&amp;quot;;&amp;#39;, function(){
+        console.log(&amp;#39;dosya yazıldı! Şimdi dizininizi kontrol edin&amp;#39;)
+      });
+  }
+  console.log(JSON.stringify(answers, null , &amp;#39; &amp;#39;));
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Çıktı olarak console’a json datayı yazacak ve seçilen dosyayı dizin klasörüne oluşturacak.&lt;/p&gt;
+&lt;h3 id=&quot;okudu-unuz-i-in-te-ekk-r-ederim-&quot;&gt;Okuduğunuz için teşekkür ederim.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/nodejs-dersleri&quot;&gt;Tüm Github repositorileri&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Npm modül yapımı 1</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/</link>
@@ -24,8 +94,8 @@
 &lt;/ul&gt;
 &lt;p&gt;Npm init yaparak başlayalım. proje dosyası oluşturup terminalden klasöre erilim daha sonra &lt;code&gt;npm init&lt;/code&gt; yaparak başlayalım.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;npm init
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modülünüzün ismini, açıklamasını, versiyonunu .etc girdikten sonra packages.json dosyamızı oluşturduk.&lt;/p&gt;
-&lt;h3 id=&quot;packages-json&quot;&gt;packages.json&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modülünüzün ismini, açıklamasını, versiyonunu .etc girdikten sonra package.json dosyamızı oluşturduk.&lt;/p&gt;
+&lt;h3 id=&quot;package-json&quot;&gt;package.json&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;{
   &amp;quot;name&amp;quot;: &amp;quot;guidfy&amp;quot;,
   &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;quot;,
@@ -83,13 +153,13 @@ console.log(&amp;quot;Bu ilk guid&amp;#39;imiz %s&amp;quot;, guidify());
 // Bu ilk guid&amp;#39;imiz 18dc1f7c0373d09bdc1a
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/npm-modul-yapimi-1/log.png&quot; alt=&quot;ilk çıktı&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Şimdi ise bir test yazalım.&lt;/p&gt;
-&lt;p&gt;Bunun için &lt;code&gt;/tests&lt;/code&gt; klasörü açıtorum içerisine &lt;code&gt;guidify.js&lt;/code&gt; dosyamı oluşturuyorum.&lt;/p&gt;
+&lt;p&gt;Bunun için &lt;code&gt;/tests&lt;/code&gt; klasörü açıyorum içerisine &lt;code&gt;guidify.js&lt;/code&gt; dosyamı oluşturuyorum.&lt;/p&gt;
 &lt;h3 id=&quot;guidify-js&quot;&gt;guidify.js&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;/**
  * Module dependencies.
  */
 
- // bir üst dizindeki moduülümüzü çağırıyoruz
+ // bir üst dizindeki modülümüzü çağırıyoruz
 var Guidify = require(&amp;#39;../index.js&amp;#39;);
 var assert = require(&amp;#39;assert&amp;#39;);
 
