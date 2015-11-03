@@ -5,9 +5,127 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Tue, 03 Nov 2015 23:30:00 +0200</pubDate>
+    <pubDate>Wed, 04 Nov 2015 23:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Npm modulleri - FTP nedir?</title>
+      <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-ftp-nedir/</link>
+      <pubDate>Wed, 04 Nov 2015 23:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-ftp-nedir/</guid>
+      <author></author>
+      <description>&lt;p&gt;&lt;code&gt;ftp&lt;/code&gt; modülü standart ftp protokollerini kullanarak ftp server’a bağlantı yapmamızı sağlayan bir modül. Minimal ftp adında bir konu başlığımız mevcut. Bu konuyu videolu olarak anlatmayı düşünüyorum. Şimdilik sadece &lt;code&gt;ftp&lt;/code&gt; modülünün nasıl çalıştığını anlatacağım.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Yapacağımız minimal ftp büyük olasılıkla aşağıdaki görsellere yakın olarak yayınlanacak.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-ftp-nedir/main.png&quot; alt=&quot;main.js&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-ftp-nedir/ftp.png&quot; alt=&quot;ftp.js&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;package-json&quot;&gt;package.json&lt;/h3&gt;
+&lt;p&gt;Npm init ile başlıyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;package.json dosyamız oluştu.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;ftp-app&amp;quot;,
+  &amp;quot;main&amp;quot;: &amp;quot;index.js&amp;quot;
+  ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;index-js&quot;&gt;index.js&lt;/h3&gt;
+&lt;p&gt;Şimdi &lt;code&gt;index.js&lt;/code&gt; dosyası oluşturuyoruz.&lt;/p&gt;
+&lt;p&gt;Test için bir fpt account oluşturmuştum, siz mevcut ftp hesaplarınızı deneyebilirsiniz. Host, user, password olarak bilgilerinizi girdiğinizde bağlantı sağlanacaktır. Eğer herhangi bir host girmezseniz 127.0.0.1:23 ip/portuyla localinize bağlanmayı deneyecektir.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// FTP modülünü require ile çağırıyoruz.
+var Client = require(&amp;#39;ftp&amp;#39;);
+
+// yeni bir client oluşturuyoruz.
+var client = new Client();
+
+/**
+ * account objesine verilerimizi giriyoruz, diğer opsiyonlar (secure vs)
+ * için https://www.npmjs.com/package/ftp#methods methods&amp;gt;connect başlığı
+ * altında daha fazla bilgi var.
+ */
+
+var account = {
+  host: &amp;quot;ftp.hostisminiz.com&amp;quot;,
+  user: &amp;quot;kullaniciadi&amp;quot;,
+  password : &amp;quot;sifreniz&amp;quot;,
+}
+
+/**
+ * ready: başarılı bir şekilde giriş yapıldığında
+ */
+client.on(&amp;#39;ready&amp;#39;, function() {
+
+  /**
+   * list: server&amp;#39;daki dosya/file listesini döner
+   */
+  client.list(function(err, list) {
+    if (err) throw err;
+    console.log(JSON.stringify(list, null, &amp;#39; &amp;#39;));
+  });
+
+  /**
+   * on:error: eğer bağlantıda herhangi bir problem olursa bildirim yapar
+   */
+  client.on(&amp;#39;error&amp;#39;, function() {
+    console.log(&amp;#39;error&amp;#39;);
+  });
+
+});
+
+/**
+ * account objesini connect metoduna gönderip çalıştırıyoruz.
+ */
+client.connect(account);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;client.list&lt;/code&gt; Serverdaki dosyalarımızın listesini döner. Eğer sunucudaki herhangi bir klasöre erişmek isterseniz bunu list fonksiyonuna path olarak girmeniz yeterli.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;client.list(&amp;#39;/theme/css/less&amp;#39;)&lt;/code&gt; böylelikle istediğiniz klasörü listelemiş olursunuz.&lt;/p&gt;
+&lt;p&gt;Kendi hostumdan şu şekilde bir çıktı aldım:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+{
+  &amp;quot;type&amp;quot;: &amp;quot;d&amp;quot;,
+  &amp;quot;name&amp;quot;: &amp;quot;stylesheets&amp;quot;,
+  &amp;quot;sticky&amp;quot;: false,
+  &amp;quot;rights&amp;quot;: {
+   &amp;quot;user&amp;quot;: &amp;quot;rwx&amp;quot;,
+   &amp;quot;group&amp;quot;: &amp;quot;rx&amp;quot;,
+   &amp;quot;other&amp;quot;: &amp;quot;rx&amp;quot;
+  },
+  &amp;quot;owner&amp;quot;: &amp;quot;16761643&amp;quot;,
+  &amp;quot;group&amp;quot;: &amp;quot;16761643&amp;quot;,
+  &amp;quot;size&amp;quot;: 4096,
+  &amp;quot;date&amp;quot;: &amp;quot;2015-10-17T21:19:00.000Z&amp;quot;
+ }
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-ftp-nedir/log.png&quot; alt=&quot;log.js&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Type : ‘-‘ ya da ‘d’ olarak döner. - dosya olduğunu, d bir dizin olduğunu gösterir&lt;/li&gt;
+&lt;li&gt;Date : son değiştirilme tarihini verir.&lt;/li&gt;
+&lt;li&gt;Rights : dosya yazma, okuma izinleri. rwx rx rx olarak çıktı geliyor&lt;/li&gt;
+&lt;li&gt;Size : Dosyanın boyutunu kb cinsinden verir.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;dosya-indirme&quot;&gt;Dosya indirme&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;client.get(&amp;#39;/javascrip/main.js&amp;#39;, function(err) {
+
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;dosya-g-nderme&quot;&gt;Dosya gönderme&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;client.put(&amp;#39;/javascrip/main.js&amp;#39;, function(err) {
+   if (err) throw err;
+   client.end();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;pathname-working-directory-pwd&quot;&gt;Pathname working directory PWD&lt;/h3&gt;
+&lt;p&gt;içerisinde bulunduğunuz path’i verir&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;client.pwd(function(err) {
+   if (err) throw err;
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;! &lt;code&gt;FTP&lt;/code&gt; modülü tüm ftp komutlarını içermez.&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;bkz: &lt;a href=&quot;https://en.wikipedia.org/wiki/List_of_FTP_commands&quot;&gt;ftp komutlar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;IETF(internet engineering task force)’in ftp &lt;a href=&quot;https://www.ietf.org/rfc/rfc959.txt&quot;&gt;kontrol listesi&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;Minimal ftp uygulamasında daha fazla bilgilendirme yapacağım.&lt;/p&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Npm modulleri - Inquirerjs nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-inquirerjs-nedir/</link>

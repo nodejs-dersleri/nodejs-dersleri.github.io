@@ -19,7 +19,7 @@ a{
 }
 
 a:hover{
-  
+
 }
 
 *{
@@ -217,6 +217,21 @@ article{
   font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
   font-size: 16px
 }
+
+.markdown-body ul{
+  display: block;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.markdown-body li{
+  display: block;
+  clear: both;
+  width: 100%;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
 
 .hljs{
   padding: 10px 15px
