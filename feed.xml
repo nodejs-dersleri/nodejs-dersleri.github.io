@@ -5,9 +5,182 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Wed, 04 Nov 2015 23:30:00 +0200</pubDate>
+    <pubDate>Thu, 05 Nov 2015 23:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Npm modulleri - Chalk nedir?</title>
+      <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</link>
+      <pubDate>Thu, 05 Nov 2015 23:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</guid>
+      <author></author>
+      <description>&lt;p&gt;Chalk, colors, cli-color modülleri aslında aynı işe yarıyor. Terminalde verdiğiniz çıktıları renklendirip font’ları ile farkındalık yaratabilirsiniz.&lt;/p&gt;
+&lt;p&gt;Aralarında bazı farklılıklar olsa da içlerinde hız, api bakımından en iyisi(benim için). İndirilme oranıda epey yüksek, 5700’den fazla &lt;a href=&quot;https://www.npmjs.com/browse/depended/chalk&quot;&gt;npm modülünde&lt;/a&gt; kullanılmış.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-chalk-nedir/npm-modulleri-chalk.svg&quot; alt=&quot;Npm modulleri - Chalk nedir&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Konuyu iki başlık altında inceleyeceğiz&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Chalk’ın kullanılışı&lt;/li&gt;
+&lt;li&gt;Chalk gibi bir modül ya da util nasıl yapabiliriz.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;package-json&quot;&gt;package.json&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;chalk-module&amp;quot;,
+  &amp;quot;version&amp;quot;: &amp;quot;1.0.0&amp;quot;,
+  &amp;quot;main&amp;quot;: &amp;quot;index.js&amp;quot;,
+  &amp;quot;repository&amp;quot; : {
+    &amp;quot;type&amp;quot; : &amp;quot;git&amp;quot;,
+    &amp;quot;url&amp;quot; : &amp;quot;https://github.com/nodejs-dersleri/chalk&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;index-js&quot;&gt;index.js&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;#39;use strict&amp;#39;;
+
+/**
+ * Bağımlılıkları tanımlıyoruz
+ */
+var chalk = require(&amp;#39;chalk&amp;#39;);
+
+/**
+ * Aşağıda Niteleyiciler, Renkler ve Arkaplan renklerini bulabilirsiniz
+ * Bir kaç örnekle başlayalım.
+ */
+console.log(
+  chalk.blue.bold(&amp;#39;1. Nodejs için&amp;#39;)
+)
+
+/**
+ * Inverse: atanan rengi tersine çevirir.
+ */
+console.log(
+  chalk.blue(&amp;#39;2. Türkçe&amp;#39;) + &amp;#39; Kaynak&amp;#39; + chalk.inverse.red(&amp;#39;!&amp;#39;)
+)
+
+/**
+ * birdern fazla niteleyici ve rengi ard arda kullanabilirsiniz
+ */
+console.log(
+  chalk.blue.magenta.dim.bold(&amp;#39;3. Notlar&amp;#39;)
+)
+
+console.log(
+  chalk.black(&amp;#39;5. Örnek&amp;#39;, chalk.underline.bgGreen(&amp;#39; uygulamalar&amp;#39;) + &amp;#39;!&amp;#39;)
+)
+
+console.log(
+  chalk.green(
+      &amp;#39;Nodejs Dersleri &amp;#39; +
+      chalk.blue.underline.bold(&amp;#39;nodejs-dersleri.github.io&amp;#39;) +
+      &amp;#39; ziyaret edin&amp;#39;
+  )
+);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Şimdi terminalden &lt;code&gt;index.js&lt;/code&gt; dosyamızı çağıralım.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;node index.js
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-chalk-nedir/nodejs-chalk-nedir.png&quot; alt=&quot;nodejs-chalk-nedir&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;niteleyiciler&quot;&gt;Niteleyiciler&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;reset&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bold&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dim&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;italic&lt;/code&gt; &lt;em&gt;(yaygın olarak desteklenmiyor)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;underline&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inverse&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hidden&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;strikethrough&lt;/code&gt; &lt;em&gt;(yaygın olarak desteklenmiyor)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;renkler&quot;&gt;Renkler&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;black&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;red&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;green&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yellow&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;blue&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;magenta&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cyan&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;white&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gray&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;arkaplan-renkleri&quot;&gt;Arkaplan renkleri&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bgBlack&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgRed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgGreen&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgYellow&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgBlue&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgMagenta&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgCyan&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bgWhite&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/br&gt;
+&lt;/br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;kendi-mod-l-m-z-yapal-m&quot;&gt;Kendi modülümüzü yapalım&lt;/h2&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ansi renk kodları ve niteleyiciler hakkında daha fazla bilgi için &lt;a href=&quot;https://en.wikipedia.org/wiki/ANSI_escape_code#graphics&quot;&gt;wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;module.js&lt;/code&gt; adında bir dosya oluşturalım.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;#39;use strict&amp;#39;;
+
+module.exports= function(text,type){
+
+  /**
+   * Tüm renk ve niteleyici kodları için kaynaklar kısmında link mevcut
+   */
+  var style = {
+    bold:       [1, 22],
+    underline:  [4, 24],
+    black:      [30, 39],
+        red:        [31, 39],
+        green:      [32, 39],
+    bgBlack:    [40, 49],
+        bgRed:      [41, 49],
+        bgGreen:    [42, 49],
+        bgYellow:   [43, 49],
+        bgBlue:     [44, 49]
+  }
+
+  function wrap(args) {
+    style = style[type];
+
+    /**
+    * Aslında yaptığımı şey =&amp;gt; \u001b[31m  text  \u001b[m39
+    * bu bize kırmızı renkte bir çıktı verecektir.
+    */
+    var tags = {
+       open: &amp;#39;\u001b[&amp;#39; + style[0] + &amp;#39;m&amp;#39;,
+       close: &amp;#39;\u001b[&amp;#39; + style[1] + &amp;#39;m&amp;#39;
+     }
+    return tags.open + args + tags.close
+  }
+
+  return wrap(text)
+
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Şimdi index dosyamıza şu kodları ekleyelim&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var renk = require(&amp;#39;./module.js&amp;#39;);
+
+console.log(
+  renk(&amp;#39;Bu bizim module.js\&amp;#39;ten dönen renklendirilmiş veri :)&amp;#39;,&amp;#39;bgBlue&amp;#39;) + &amp;#39;\n&amp;#39;  +
+  renk(&amp;#39;Aşağıdakiler ise chalk\&amp;#39;tan alınan çıktılar&amp;#39;,&amp;#39;green&amp;#39;)
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/npm-moduleri-chalk-nedir/nodejs-terminal-renklendirme.png&quot; alt=&quot;nodejs-terminal-renklendirme&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kendi modülümüzü  anlatmak için yaptım. Generic bir yapısı yoktur.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;kaynaklar&quot;&gt;Kaynaklar&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://wiki.bash-hackers.org/scripting/terminalcodes&quot;&gt;http://wiki.bash-hackers.org/scripting/terminalcodes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/ANSI_escape_code&quot;&gt;https://en.wikipedia.org/wiki/ANSI_escape_code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/chalk/chalk&quot;&gt;https://github.com/chalk/chalk&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Npm modulleri - FTP nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-ftp-nedir/</link>

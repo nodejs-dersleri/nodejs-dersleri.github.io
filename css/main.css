@@ -14,12 +14,12 @@ body{
 }
 
 a{
-  color:#80bd01;
+  color:#4078c0;
   text-decoration: none;
 }
 
 a:hover{
-
+  text-decoration: underline;
 }
 
 *{
@@ -41,24 +41,32 @@ time{
   color: #555
 }
 
-h2, h3 {
+h2, h3, h4 {
   font-size: 28px;
   font-family: 'Raleway', sans-serif;
-  text-transform: uppercase;
   margin-bottom:0;
   color: #383F49
 }
 
-h2 a {
+h2 a,
+h4 a {
   color: #383F49
 }
 
-h2 a:hover {
+h2 a:hover,
+h4 a:hover {
   color: #464E5A
 }
 
 h3{
-  font-size: 24px
+  font-size: 24px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 15px
+}
+
+h4{
+  font-size: 16px
 }
 
 p {
@@ -69,8 +77,32 @@ p {
 }
 
 ul{
-  display: inline-block;
+  list-style-type: disc;
+  list-style-position: inside;
 }
+
+ol{
+  list-style-position: inside;
+}
+
+ul, ol{
+
+  color: #333;
+  background: #f8f8f8;
+  border-radius: 3px;
+  padding: 15px 15px 15px 25px;
+  margin: 20px 0;
+}
+
+li ol,
+li ul {
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+li { display: list-item; }
 
 code{
   padding: 3px 5px;
@@ -87,6 +119,17 @@ pre{
   width: 100%;
 }
 
+blockquote{
+  padding: 0 15px;
+  margin: 10px 0;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+blockquote p{
+  padding: 0
+}
+
 .archive ul,
 .archive li{
   padding: 0;
@@ -100,6 +143,15 @@ article img {
 
 .clear {
     clear: both
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
 }
 
 /**
@@ -151,6 +203,42 @@ aside p {
   text-transform: uppercase;
 }
 
+/**
+ *  Nav
+ */
+
+nav {
+  padding: 40px 10% 40px;
+  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #f1f1f1
+}
+
+nav a {
+  color: #383F49;
+  margin-right: 25px;
+  float: left
+}
+
+nav a:hover {
+  color: #464E5A;
+  text-decoration: none;
+}
+
+.social{
+  float: right;
+  color: #999;
+  margin-right: 0;
+  margin-left: 15px;
+}
+
+.social:hover{
+  color: #4078c0
+}
+
+
+
 
 /**
  *  Article
@@ -173,6 +261,11 @@ article{
 
 .markdown-body .content{
   margin-top: 20px
+}
+
+.markdown-body img {
+  display: block;
+  margin: 20px 0 40px
 }
 
 .project a{
@@ -218,18 +311,17 @@ article{
   font-size: 16px
 }
 
+.markdown-body p{
+  display: block;
+}
+
 .markdown-body ul{
   display: block;
-  list-style-type: disc;
-  list-style-position: inside;
 }
 
 .markdown-body li{
-  display: block;
   clear: both;
   width: 100%;
-  list-style-type: disc;
-  list-style-position: inside;
 }
 
 
@@ -264,6 +356,59 @@ nav.pagination-post a{
 
 #disqus_thread{
   margin-top: 100px
+}
+
+.related {
+  width: 100%;
+  clear: both;
+  display: block;
+  padding-top: 50px
+}
+
+.related h4{
+  margin-bottom: 20px
+}
+
+.related .item{
+  width:48%;
+  height: 230px;
+  display: table-cell;
+  color: #333;
+  text-align: center;
+  -webkit-text-size-adjust: none;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  display: table;
+  float: left;
+  overflow: hidden;
+  color: #fff;
+  margin-right: 4%;
+}
+
+
+
+.related span{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 250px;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  transition: all 0.2s
+}
+
+.related span:hover{
+background-color: rgba(0, 0, 0, 0.8);
+}
+
+.related .item:last-of-type{
+  margin-right: 0
 }
 
 
@@ -331,6 +476,11 @@ footer{
 
      footer{
        text-align: center
+     }
+
+     .related .item{
+       width: 100%;
+       margin-bottom: 20px
      }
 
  }

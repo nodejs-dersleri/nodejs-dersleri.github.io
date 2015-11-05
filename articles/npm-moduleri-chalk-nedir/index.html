@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Npm modulleri - Chalk nedir? - Nodejs Dersleri
+    </title>
+    <!-- begin :og block-->
+    <meta property="og:title" content="Npm modulleri - Chalk nedir?">
+    <meta property="og:site_name" content="Nodejs Dersleri">
+    <meta property="og:url" content="http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/">
+    <meta property="og:image" content="http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/nodejs-terminal-renklendirme.png">
+    <!-- begin :og block-->
+    <link rel="alternate" href="http://nodejs-dersleri.github.io/feed.xml" type="application/rss+xml" title="NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css">
+    <link rel="stylesheet" href="/fonts/octicons/octicons.css">
+    <link rel="stylesheet" href="/fonts/socicon/socicon.css">
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body class="article-detail">
+    <!-- Begin: Aside-->
+    <aside id="particles-js">
+      <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri</a></h1>
+      <p>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</p>
+    </aside>
+    <!-- End: Aside-->
+    <!-- Begin: Content-->
+    <main> 
+      <nav class="clearfix"><a href="/">Nodejs</a><a href="/archive.html">Arşiv</a><a href="https://www.linkedin.com/grps/Nodejs-Dersleri-8422784" target="_blank" class="social"><span class="socicon socicon-linkedin"></span></a><a href="https://twitter.com/nodejsdersleri" target="_blank" class="social"><span class="socicon socicon-twitter"></span></a><a href="https://www.youtube.com/channel/UCkgCOVtZMEtxwmfgqAyZsXA" target="_blank" class="social"><span class="socicon socicon-youtube"></span></a><a href="https://github.com/nodejs-dersleri" target="_blank" class="social"><span class="octicon octicon-logo-github"></span></a></nav>
+      <article class="article markdown-body">
+        <h2>Npm modulleri - Chalk nedir?</h2>
+        <p class="author"><span class="octicon octicon-pencil"> </span> <span class="author"><a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
+        </p>
+        <section class="project blankslate">
+          <p><span class="octicon octicon-comment"></span>Amaç: Terminalde aldığınız çıktıları renklendirip daha eğlenceli hale getirelim
+          </p><a href="https://github.com/nodejs-dersleri/chalk" class="btn btn-primary"><span class="octicon octicon-mark-github"></span>Kaynak kod</a>
+        </section>
+        <div class="dependencies"><span class="octicon octicon-tag"> </span><code><a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/chalk">chalk</a></code>
+        </div><br>
+        <section class="content"><p>Chalk, colors, cli-color modülleri aslında aynı işe yarıyor. Terminalde verdiğiniz çıktıları renklendirip font’ları ile farkındalık&nbsp;yaratabilirsiniz.</p>
+<p>Aralarında bazı farklılıklar olsa da içlerinde hız, api bakımından en iyisi(benim için). İndirilme oranıda epey yüksek, 5700’den fazla <a href="https://www.npmjs.com/browse/depended/chalk">npm modülünde</a>&nbsp;kullanılmış.</p>
+<hr>
+<p><img src="/articles/npm-moduleri-chalk-nedir/npm-modulleri-chalk.svg" alt="Npm modulleri - Chalk nedir"></p>
+<blockquote>
+<p>Konuyu iki başlık altında&nbsp;inceleyeceğiz</p>
+</blockquote>
+<ol>
+<li>Chalk’ın&nbsp;kullanılışı</li>
+<li>Chalk gibi bir modül ya da util nasıl&nbsp;yapabiliriz.</li>
+</ol>
+<p></br></p>
+<h3 id="package-json">package.json</h3>
+<pre><code>{
+  &quot;name&quot;: &quot;chalk-module&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;repository&quot; : {
+    &quot;type&quot; : &quot;git&quot;,
+    &quot;url&quot; : &quot;https://github.com/nodejs-dersleri/chalk&quot;
+  }
+}
+</code></pre><h3 id="index-js">index.js</h3>
+<pre><code>
+&#39;use strict&#39;;
+
+/**
+ * Bağımlılıkları tanımlıyoruz
+ */
+var chalk = require(&#39;chalk&#39;);
+
+/**
+ * Aşağıda Niteleyiciler, Renkler ve Arkaplan renklerini bulabilirsiniz
+ * Bir kaç örnekle başlayalım.
+ */
+console.log(
+  chalk.blue.bold(&#39;1. Nodejs için&#39;)
+)
+
+/**
+ * Inverse: atanan rengi tersine çevirir.
+ */
+console.log(
+  chalk.blue(&#39;2. Türkçe&#39;) + &#39; Kaynak&#39; + chalk.inverse.red(&#39;!&#39;)
+)
+
+/**
+ * birdern fazla niteleyici ve rengi ard arda kullanabilirsiniz
+ */
+console.log(
+  chalk.blue.magenta.dim.bold(&#39;3. Notlar&#39;)
+)
+
+console.log(
+  chalk.black(&#39;5. Örnek&#39;, chalk.underline.bgGreen(&#39; uygulamalar&#39;) + &#39;!&#39;)
+)
+
+console.log(
+  chalk.green(
+      &#39;Nodejs Dersleri &#39; +
+      chalk.blue.underline.bold(&#39;nodejs-dersleri.github.io&#39;) +
+      &#39; ziyaret edin&#39;
+  )
+);
+</code></pre><p>Şimdi terminalden <code>index.js</code> dosyamızı&nbsp;çağıralım.</p>
+<pre><code>node index.js
+</code></pre><p><img src="/articles/npm-moduleri-chalk-nedir/nodejs-chalk-nedir.png" alt="nodejs-chalk-nedir"></p>
+<h3 id="niteleyiciler">Niteleyiciler</h3>
+<ul>
+<li><code>reset</code></li>
+<li><code>bold</code></li>
+<li><code>dim</code></li>
+<li><code>italic</code> <em>(yaygın olarak&nbsp;desteklenmiyor)</em></li>
+<li><code>underline</code></li>
+<li><code>inverse</code></li>
+<li><code>hidden</code></li>
+<li><code>strikethrough</code> <em>(yaygın olarak&nbsp;desteklenmiyor)</em></li>
+</ul>
+<h3 id="renkler">Renkler</h3>
+<ul>
+<li><code>black</code></li>
+<li><code>red</code></li>
+<li><code>green</code></li>
+<li><code>yellow</code></li>
+<li><code>blue</code></li>
+<li><code>magenta</code></li>
+<li><code>cyan</code></li>
+<li><code>white</code></li>
+<li><code>gray</code></li>
+</ul>
+<h3 id="arkaplan-renkleri">Arkaplan&nbsp;renkleri</h3>
+<ul>
+<li><code>bgBlack</code></li>
+<li><code>bgRed</code></li>
+<li><code>bgGreen</code></li>
+<li><code>bgYellow</code></li>
+<li><code>bgBlue</code></li>
+<li><code>bgMagenta</code></li>
+<li><code>bgCyan</code></li>
+<li><code>bgWhite</code></li>
+</ul>
+<p></br>
+</br></p>
+<h2 id="kendi-mod-l-m-z-yapal-m">Kendi modülümüzü&nbsp;yapalım</h2>
+<p></br></p>
+<blockquote>
+<p>Ansi renk kodları ve niteleyiciler hakkında daha fazla bilgi için <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#graphics">wikipedia</a></p>
+</blockquote>
+<p><code>module.js</code> adında bir dosya&nbsp;oluşturalım.</p>
+<pre><code>
+&#39;use strict&#39;;
+
+module.exports= function(text,type){
+
+  /**
+   * Tüm renk ve niteleyici kodları için kaynaklar kısmında link mevcut
+   */
+  var style = {
+    bold:       [1, 22],
+    underline:  [4, 24],
+    black:      [30, 39],
+        red:        [31, 39],
+        green:      [32, 39],
+    bgBlack:    [40, 49],
+        bgRed:      [41, 49],
+        bgGreen:    [42, 49],
+        bgYellow:   [43, 49],
+        bgBlue:     [44, 49]
+  }
+
+  function wrap(args) {
+    style = style[type];
+
+    /**
+    * Aslında yaptığımı şey =&gt; \u001b[31m  text  \u001b[m39
+    * bu bize kırmızı renkte bir çıktı verecektir.
+    */
+    var tags = {
+       open: &#39;\u001b[&#39; + style[0] + &#39;m&#39;,
+       close: &#39;\u001b[&#39; + style[1] + &#39;m&#39;
+     }
+    return tags.open + args + tags.close
+  }
+
+  return wrap(text)
+
+};
+</code></pre><p>Şimdi index dosyamıza şu kodları&nbsp;ekleyelim</p>
+<pre><code>var renk = require(&#39;./module.js&#39;);
+
+console.log(
+  renk(&#39;Bu bizim module.js\&#39;ten dönen renklendirilmiş veri :)&#39;,&#39;bgBlue&#39;) + &#39;\n&#39;  +
+  renk(&#39;Aşağıdakiler ise chalk\&#39;tan alınan çıktılar&#39;,&#39;green&#39;)
+)
+</code></pre><p><img src="/articles/npm-moduleri-chalk-nedir/nodejs-terminal-renklendirme.png" alt="nodejs-terminal-renklendirme"></p>
+<blockquote>
+<p>Kendi modülümüzü  anlatmak için yaptım. Generic bir yapısı&nbsp;yoktur.</p>
+</blockquote>
+<h3 id="kaynaklar">Kaynaklar</h3>
+<ol>
+<li><a href="http://wiki.bash-hackers.org/scripting/terminalcodes">http://wiki.bash-hackers.org/scripting/terminalcodes</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ANSI_escape_code">https://en.wikipedia.org/wiki/ANSI_escape_code</a></li>
+<li><a href="https://github.com/chalk/chalk">https://github.com/chalk/chalk</a></li>
+</ol>
+<hr>
+</section>
+        <div class="related clearfix">
+          <h4>Benzer Konular</h4><a href="/articles/npm-moduleri-ftp-nedir/" title="ftp,npm,modül yapımı" style="background-image:url(/articles/npm-moduleri-ftp-nedir/main.png" class="item"><span>Npm modulleri - FTP nedir?</span></a><a href="/articles/npm-modul-yapimi-1/" title="modül yapımı,npm modülü" style="background-image:url(/articles/npm-modul-yapimi-1/log.png" class="item"><span>Npm modül yapımı 1</span></a>
+        </div>
+        <div id="disqus_thread"> </div>
+        <script>
+          var disqus_config = function () {
+          this.page.url = 'http://nodejs-dersleri.github.io//articles/npm-moduleri-chalk-nedir/';
+          this.page.identifier = '/articles/npm-moduleri-chalk-nedir/'; 
+          };
+          
+          (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = '//nodejsdersleri.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      </article>
+      <!-- Begin: Footer-->
+      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascript/particles.min.js"></script>
+    <script src="/javascript/canvas.js"></script>
+    <script src="/lib/highlight/highlight.pack.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-69517099-1', 'auto');
+      ga('send', 'pageview');
+          
+          
+    </script>
+  </body>
+</html>
+<!--section.about-->
+<!--!=contents['about.md'].html-->
+<!-- End: Footer-->
+<!-- End: Content-->
