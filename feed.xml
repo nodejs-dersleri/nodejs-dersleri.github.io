@@ -5,13 +5,13 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Thu, 05 Nov 2015 23:30:00 +0200</pubDate>
+    <pubDate>Fri, 06 Nov 2015 23:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
       <title>Npm modulleri - Chalk nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</link>
-      <pubDate>Thu, 05 Nov 2015 23:30:00 +0200</pubDate>
+      <pubDate>Fri, 06 Nov 2015 23:30:00 +0200</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</guid>
       <author></author>
       <description>&lt;p&gt;Chalk, colors, cli-color modülleri aslında aynı işe yarıyor. Terminalde verdiğiniz çıktıları renklendirip font’ları ile farkındalık yaratabilirsiniz.&lt;/p&gt;
