@@ -1,7 +1,7 @@
 # Nodejs için Türkçe kaynak, notlar, örnekler uygulamalar
 
 
-Sizde bir içerik girmek isterseniz [buradan](https://github.com/nodejs-dersleri/nodejs-dersleri-generator) devam edin. 
+Siz de bir içerik girmek isterseniz [buradan](https://github.com/nodejs-dersleri/nodejs-dersleri-generator) devam edin. 
 
 ##  Planlanan Konular
 * ✓ [Nodejs ile screen scraping](http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/) 
