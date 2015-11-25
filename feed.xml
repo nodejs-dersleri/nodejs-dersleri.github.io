@@ -5,13 +5,696 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Fri, 06 Nov 2015 23:30:00 +0200</pubDate>
+    <pubDate>Mon, 23 Nov 2015 23:00:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
+      <title>Phantomjs ile responsive ekran görüntüsü alma - 2</title>
+      <link>http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/</link>
+      <pubDate>Mon, 23 Nov 2015 23:00:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/</guid>
+      <author></author>
+      <description>&lt;p&gt;İlk yazımızda ekran görüntüsü almış ve kaydetmiştik, bu yazımızda ise farklı çözünürlüklerde birden çok ekran görüntüsü kaydedeceğiz, bunun yanı sıra script’imize cli’dan gelen paremetrelere farklı davranışlar sergileteceğiz.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;p&gt;Dosyamızın son hali bu şekildeydi, bunun üzerinden devam edeceğiz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+var fs = require(&amp;#39;fs&amp;#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&amp;#39;Url addresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+
+page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+
+        page.viewportSize = viewports[0];
+        var output = folder + &amp;quot;/&amp;quot; + getFileName();
+        console.log(&amp;#39;Saving &amp;#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+
+
+function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\//, &amp;#39;&amp;#39;)
+        .replace(/\/$/, &amp;#39;&amp;#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturulamadı.&amp;#39;);
+        phantom.exit();
+    }
+    console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturuldu.&amp;#39;);
+    return dir;
+}
+
+function getFileName() {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;.png&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;-kt-format-&quot;&gt;Çıktı formatı&lt;/h3&gt;
+&lt;p&gt;şimdide paremetre ile dosyayı kaydedeceğimiz formatı parametre olarak alalım.&lt;/p&gt;
+&lt;p&gt;urlAddress değişkenimizin altına hemen şu kodu yapıştıralım.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var ext = &amp;#39;.&amp;#39; + (args[2] || &amp;#39;png&amp;#39;).toLowerCase();
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;buraki kodu açıklamak gerekirse parantezleri kullanarak işlem önceliğini belirledik, &lt;strong&gt;args[2]&lt;/strong&gt; parametresi varsa kullan yoksa &lt;strong&gt;png&lt;/strong&gt; kullan dedik daha sonra &lt;strong&gt;toLowerCase&lt;/strong&gt; fonskiyonu ile hepsini kucuk yazi haline getirdik en son &lt;strong&gt;.&lt;/strong&gt; işareti ile birleştirdik.&lt;/p&gt;
+&lt;h4 id=&quot;getfilename&quot;&gt;getFileName&lt;/h4&gt;
+&lt;p&gt;şimdi burdada ufak bir düzenleme yapalım&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;.png&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;satırını &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + ext;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ile değiştirelim&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function getFileName() {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + ext;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/ pdf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/pdf.png&quot; alt=&quot;pdf&quot;&gt;&lt;/p&gt;
+&lt;p&gt;hangi formatlarda çıktı alabileceğimizi bir önceki yazımızda listemiştik.&lt;/p&gt;
+&lt;h3 id=&quot;g-r-nt-y-k-rpma&quot;&gt;Görüntüyü kırpma&lt;/h3&gt;
+&lt;p&gt;şimdide az önce eklediğimiz &lt;strong&gt;ext&lt;/strong&gt; değişkenin altına şu kodu ekleyelim&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var clipping = args[3] || false;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;getfilename&quot;&gt;getFileName&lt;/h4&gt;
+&lt;p&gt;şimdide fonksiyonumuzda biraz değişiklik yapalım&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function getFileName(viewport) {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    var resolution = viewport.width + (clipping ? &amp;quot;x&amp;quot; + viewport.height : &amp;#39;&amp;#39;);
+
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;_&amp;quot; + resolution + ext;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;yaptığımız değişiklikleri hızlıca özetleyelim, fonksiyonumuz artık bir viewport parametre alıyor ve &lt;strong&gt;resolution&lt;/strong&gt; adında yeni bir değişkene sahip bu değişkene ise gelen viewport objesinin width değerini ve clipping varsa height degerini basıyor.&lt;/p&gt;
+&lt;h4 id=&quot;ba-lant-kodu&quot;&gt;bağlantı kodu&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+        if ( clipping ) {
+            page.clipRect = viewports[0];
+        }
+        page.viewportSize = viewports[0];
+        var output = folder + &amp;quot;/&amp;quot; + getFileName(viewports[0]);
+        console.log(&amp;#39;Saving &amp;#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Eğer clipping değişkeni false değilse &lt;strong&gt;page.clipRect = viewports[0];&lt;/strong&gt; komutunu aktif ediyoruz bu bizim görüntüyü kırpma kodumuz, ve getFileName fonksiyonumuza viewport parametresini gönderdik &lt;strong&gt;getFileName(viewports[0])&lt;/strong&gt; &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/ png
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/ png true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;bu 2 komutunda sorunsuz çalışması gerekiyor.( eğer çalışmaz yazının devamında mevcut kodlarımızı vereceğim karşılaştırma yapabilirsiniz)
+&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/clipping.png&quot; alt=&quot;clipping&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+var fs = require(&amp;#39;fs&amp;#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&amp;#39;Url addresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+var ext = &amp;#39;.&amp;#39; + (args[2] || &amp;#39;png&amp;#39;).toLowerCase();
+var clipping = args[3] || false;
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+
+page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+        if ( clipping ) {
+            page.clipRect = viewports[0];
+        }
+        page.viewportSize = viewports[0];
+        var output = folder + &amp;quot;/&amp;quot; + getFileName(viewports[0]);
+        console.log(&amp;#39;Saving &amp;#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+
+
+function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\//, &amp;#39;&amp;#39;)
+        .replace(/\/$/, &amp;#39;&amp;#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturulamadı.&amp;#39;);
+        phantom.exit();
+    }
+    console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturuldu.&amp;#39;);
+    return dir;
+}
+
+function getFileName(viewport) {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    var resolution = viewport.width + (clipping ? &amp;quot;x&amp;quot; + viewport.height : &amp;#39;&amp;#39;);
+
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;_&amp;quot; + resolution + ext;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;t-m-z-n-rl-kler&quot;&gt;Tüm çözünürlükler&lt;/h3&gt;
+&lt;h4 id=&quot;ba-lant-fonksiyonumuzu-g-ncelleyelim&quot;&gt;bağlantı fonksiyonumuzu güncelleyelim&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+        var key, output;
+
+        function render(n) {
+            if ( !!n ) {
+                key = n - 1;
+                page.viewportSize = viewports[key];
+                if ( clipping ) {
+                    page.clipRect = viewports[key];
+                }
+                output = folder + &amp;quot;/&amp;quot; + getFileName(viewports[key]);
+                console.log(&amp;#39;Saving &amp;#39; + output);
+                page.render(output);
+                render(key);
+            }
+        }
+        render(viewports.length);
+    }
+    phantom.exit();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;burada for ile tüm viewports dizisini dönebilirsiniz, ben recursive fonksiyon kullanmayi tercih ettim bunun nedeni bana göre işi biten bir sonraki işlemi tetiklemeli.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/ png true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/clipping.png&quot; alt=&quot;clipping&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;p&gt;son olarak kodumuzun son hali.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+var fs = require(&amp;#39;fs&amp;#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&amp;#39;Url addresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+var ext = &amp;#39;.&amp;#39; + (args[2] || &amp;#39;png&amp;#39;).toLowerCase();
+var clipping = args[3] || false;
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+
+page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+        var key, output;
+
+        function render(n) {
+            if ( !!n ) {
+                key = n - 1;
+                page.viewportSize = viewports[key];
+                if ( clipping ) {
+                    page.clipRect = viewports[key];
+                }
+                output = folder + &amp;quot;/&amp;quot; + getFileName(viewports[key]);
+                console.log(&amp;#39;Saving &amp;#39; + output);
+                page.render(output);
+                render(key);
+            }
+        }
+        render(viewports.length);
+    }
+    phantom.exit();
+});
+
+
+function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\//, &amp;#39;&amp;#39;)
+        .replace(/\/$/, &amp;#39;&amp;#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturulamadı.&amp;#39;);
+        phantom.exit();
+    }
+    console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturuldu.&amp;#39;);
+    return dir;
+}
+
+function getFileName(viewport) {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    var resolution = viewport.width + (clipping ? &amp;quot;x&amp;quot; + viewport.height : &amp;#39;&amp;#39;);
+
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;_&amp;quot; + resolution + ext;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;son-olarak&quot;&gt;son olarak&lt;/h3&gt;
+&lt;p&gt;İlk yazı biraz uzun sürdüğü için bu yazımızda mümkün olduğunca kısa tutarak devam etmek istedim, kimine göre ilk yazı sıkıcı ve uzun, kimine göre bu yazı yeterince açıklayacı olmayacak diye tahmin ediyorum.
+Uzun lafın kısası umarım okuyan herkes için faydalı bir anlatım olmuştur.&lt;/p&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    <item>
+      <title>Phantomjs ile responsive ekran görüntüsü alma - 1</title>
+      <link>http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/</link>
+      <pubDate>Sun, 22 Nov 2015 23:00:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/</guid>
+      <author></author>
+      <description>&lt;p&gt;Phantomjs kullanarak cli üzerinden belli bir sayfanın farklı çözünürlüklerdeki görüntüsü kaydedeceğiz.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;gereksinimler&quot;&gt;Gereksinimler&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Phantomjs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Yazacağımız kodlar phantomjs üzerinden çalışacağı için phantomjs’e bağımlıdır, aşşağıdaki adresten phantomjs’i indirip kurabilirsiniz.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://phantomjs.org/download.html&quot;&gt;http://phantomjs.org/download.html&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;p&gt;Öncelikle kodlarımızı yazmak için bir dosya açmamız gerekiyor, ben responsive screen shot grabber’ın kısaltması olan &lt;strong&gt;rssg.js&lt;/strong&gt; olarak açacağım anlatım boyuncada bunun üzerinden devam edeceğim.&lt;/p&gt;
+&lt;h3 id=&quot;system-args&quot;&gt;system.args&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Sistem modülünün çeşitli özellikleri mevcut &lt;a href=&quot;http://phantomjs.org/api/system/&quot;&gt;http://phantomjs.org/api/system/&lt;/a&gt; buradan bunlara erişebilirsiniz, bize bu anlatımda sadece &lt;strong&gt;args&lt;/strong&gt; özelliği gerekli.&lt;/p&gt;
+&lt;p&gt;system.args özelliği javascriptten bildiğimiz arguments ile aynı görevi yapmakta, yani girilen her parametreyi bir dizi olarak bize döndürmektedir.&lt;/p&gt;
+&lt;p&gt;bir örnek ile pekiştiricek olursak;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function test(){
+    return arguments;
+}
+var cevap = test(1,2,3)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;cevap nesnesi bize geriye &lt;strong&gt;[1,2,3]&lt;/strong&gt; döndürür, cevap[0] ise &lt;strong&gt;1&lt;/strong&gt;;
+system.arg’da aynen bu işi yapmakta, phantom js ile örneklendiricek olursak eğer;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;komutu tetiklediğimizde args nesnemiz şu şekilde olacaktır;&lt;/p&gt;
+&lt;p&gt;[‘rssg.js’, ‘&lt;a href=&quot;https://nodejs-dersleri.github.io/&quot;&gt;https://nodejs-dersleri.github.io/&lt;/a&gt;‘]&lt;/p&gt;
+&lt;p&gt;dipnot: cli’dan gelen her parametre string formatındadır.&lt;/p&gt;
+&lt;h3 id=&quot;fs-filesystem-&quot;&gt;fs (filesystem)&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;var fs = require(&amp;#39;fs&amp;#39;);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Adındanda anlaşılacağı gibi dosya sistemi api’ı, dosyalar ile ilgili birçok işlemi içinde barındıran mödül.
+Mevcut olan tüm api listesine buradan ulaşabilirsiniz &lt;a href=&quot;http://phantomjs.org/api/fs/&quot;&gt;http://phantomjs.org/api/fs/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;dipnot:kullanılabilir özelliklere yukarıda ki adresden bakınız node.js üzerindeki fs api’ı ile aynı değildir. &lt;/p&gt;
+&lt;h3 id=&quot;webpage&quot;&gt;Webpage&lt;/h3&gt;
+&lt;p&gt;phantomjs’in olmazsa olmazı diyebiliriz.
+sayfalarımızı bu api sayesinde acip ekran görüntüsünü alacağız&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var page = new WebPage();
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tüm api listesine buradan ulaşabilirsiniz &lt;a href=&quot;http://phantomjs.org/api/webpage/&quot;&gt;http://phantomjs.org/api/webpage/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;url-varm-&quot;&gt;Url varmı ?&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;if ( 1 === args.length ) {
+    console.log(&amp;#39;Url adresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;yukarıdaki kodu açıklayacak olursak;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;herşeyden önce if koşulu size biraz farklı gelmiş olabilir &lt;strong&gt;Yoda conditions&lt;/strong&gt; jargonu diye geçer ve çeşitli avantajları vardır (ben henüz bir dezavantajını görmedim) bunları ilgili wikipedia sayfasından ve çeşitli kaynaklardan bulabilirsiniz &lt;a href=&quot;https://en.wikipedia.org/wiki/Yoda_conditions&quot;&gt;https://en.wikipedia.org/wiki/Yoda_conditions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;1 === args.length&lt;/strong&gt;
+unutmayın ilk parametre dosyamızın adı eğer length 1’e eşit ise args nesnem &lt;strong&gt;[‘rssg.js’]&lt;/strong&gt; şeklindedir herhangi bir parametre girilmemiş, dolasıyla bağlanacak bir url adresimiz yok demektir.&lt;/li&gt;
+&lt;li&gt;eğer koşulumuz sağlanırsa &lt;strong&gt;phantom.exit();&lt;/strong&gt; ile işlemleri sonlandırıyoruz.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;url-address&quot;&gt;url address&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;var urlAddress = args[1].toLowerCase();
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Unutmayın gelen her parametre string (kullanıcı 1 değerini girmiş olsa bile string olarak geleceği için string mi diye kontrol etmemize gerek yok), dolasıyla string nesnesinin her özelliğini kullanabiliriz.
+Daha sonra bu url adresini klasör oluştururken’de kullanacağız o yüzden düzenli bir yapı elde etmek için gelen adresi toLowerCase() ile tümünü küçük harflere çeviriyoruz.&lt;/p&gt;
+&lt;h3 id=&quot;-z-n-rl-kler&quot;&gt;çözünürlükler&lt;/h3&gt;
+&lt;p&gt;Hangi çözünürlüklerde çıktılar alacağımızı belirleyeceğimiz bir dizi yaratıyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;p&gt;karışıklıkların önüne geçmek için dosyamızın şuanki hali şu şekilde olmalı.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+var fs = require(&amp;#39;fs&amp;#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&amp;#39;Url adresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;test-zaman-&quot;&gt;Test Zamanı&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        console.log(urlAddress, &amp;#39;bağlantı başarılı&amp;#39;);
+    }
+    phantom.exit();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Bu kodu’da ekledikten sonra &lt;strong&gt;phantomjs rssg.js &lt;a href=&quot;http://www.google.com&quot;&gt;http://www.google.com&lt;/a&gt;&lt;/strong&gt;
+komutu ile terminalden kontrol ediyoruz
+&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/test.png&quot; alt=&quot;test&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;klas-r-olu-tural-m&quot;&gt;klasör oluşturalım&lt;/h3&gt;
+&lt;p&gt;ilk önce url adresini klasör adına dönüştürcek ve oluşturcak bir fonksiyon yazalım&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\/, &amp;#39;&amp;#39;)
+        .replace(/\/$/, &amp;#39;&amp;#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturulamadı.&amp;#39;);
+        phantom.exit();
+    }
+    console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturuldu.&amp;#39;);
+    return dir;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;kısaca fonksiyonumuzu açıklayalım,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;fonksiyonumuz 1 parametre alıyor ve bunun url adresi olması bekleniyor&lt;/li&gt;
+&lt;li&gt;gelen url adresi regex kullanarak replace methodu yardımıyla temizleniyor ve &lt;strong&gt;dir&lt;/strong&gt; değişkenine aktarılıyor.&lt;ul&gt;
+&lt;li&gt;/^(http|https):\/\/ &lt;strong&gt;http://&lt;/strong&gt; yada &lt;strong&gt;https://&lt;/strong&gt; ile başyalanları demek anlamına geliyor&lt;/li&gt;
+&lt;li&gt;/\/$/ &lt;strong&gt;/&lt;/strong&gt; ile bitenler anlamına geliyor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;fs.makeTree() fonksiyonu string alir ve boolean bir değer döner aldığı string paremetreye göre klasör oluşturur &lt;a href=&quot;http://phantomjs.org/api/fs/method/make-tree.html&quot;&gt;http://phantomjs.org/api/fs/method/make-tree.html&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;if ( !fs.makeTree(dir) ) az önce oluşturduğumuz path i verdik eğer ki klasörü oluşturursa geriye true değerini dönecek bu bizim istediğimiz sonuç gelen sonuçu tersine ceviriyoruz true ise false, false ise true yapıyoruz. fonksiyonunun bize false donmesi durumunda if koşulu true olucak ve içeriye giricek.
+bu durumda console’a klasör oluşturulamadı diyip phantomjs’den çıkış yapıyoruz.&lt;/li&gt;
+&lt;li&gt;eğer ki if koşulu gerçekleşmez ise geriye path’i (klasör yolunu) döndürüyoruz.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;bağlantı kodunu güncelleyelim&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+    }
+    phantom.exit();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;phantomjs rssg.js http://www.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/klasor.png&quot; alt=&quot;klasor&quot;&gt;&lt;/p&gt;
+&lt;p&gt; ve dizinimizde klasör oluşmuş olması gerekiyor.&lt;/p&gt;
+&lt;h3 id=&quot;dosya-ad-&quot;&gt;dosya adı&lt;/h3&gt;
+&lt;p&gt;Aynı sayfa için birçok defa deneme yapılabileceği için benzersiz dosya isimleri oluşturmamız lazım ve aralarındaki farkları görmek açısından bence tarihe göre dosya isimlendirmesi yapmak mantıklı olur.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function getFileName(viewport) {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;.png&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;yukarıdaki kod’da çok fazla açıklanacak birşey yok aslında sadece sürekli &lt;strong&gt;+&lt;/strong&gt; ile concat etmek yerine parçaları diziye atayıp &lt;strong&gt;-&lt;/strong&gt; ile birleştiriyorum.&lt;/p&gt;
+&lt;h3 id=&quot;ilk-ekran-g-r-nt-s-i-in-son-haz-rl-k&quot;&gt;ilk ekran görüntüsü için son hazırlık&lt;/h3&gt;
+&lt;p&gt;bağlantı kodumuzu şu şekilde güncelleyelim&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+
+        page.viewportSize = viewports[0];
+        var output = folder + &amp;quot;/&amp;quot; + getFileName();
+        console.log(&amp;#39;Saving &amp;#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Yeni gelen komutlarımızı tanıyalım webpage modülünün linkini yukarı belirtmiştim zaten, detaylı bakmak için yukarıda bağlantıyı kullanabilirsiniz.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;page.viewportSize&lt;/strong&gt; sayfa görünüm boyutunu ayarlamak için kullanılıyor. &lt;a href=&quot;http://phantomjs.org/api/webpage/property/viewport-size.html&quot;&gt;http://phantomjs.org/api/webpage/property/viewport-size.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;page.render&lt;/strong&gt; sayfayı kaydetmet için kullanılıyor çıktı formatları &lt;a href=&quot;http://phantomjs.org/api/webpage/method/render.html&quot;&gt;http://phantomjs.org/api/webpage/method/render.html&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;PNG&lt;/li&gt;
+&lt;li&gt;GIF&lt;/li&gt;
+&lt;li&gt;JPEG&lt;/li&gt;
+&lt;li&gt;PDF&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;rssg-js&quot;&gt;rssg.js&lt;/h3&gt;
+&lt;p&gt;dosyamızın son hali bu şekilde olmalı&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var args = require(&amp;#39;system&amp;#39;).args;
+var fs = require(&amp;#39;fs&amp;#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&amp;#39;Url addresi girmediniz&amp;#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+
+page.open(urlAddress, function (status) {
+    if ( &amp;#39;success&amp;#39; !== status ) {
+        console.log(&amp;#39;Adrese bağlanılamadı.&amp;#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+
+        page.viewportSize = viewports[0];
+        var output = folder + &amp;quot;/&amp;quot; + getFileName();
+        console.log(&amp;#39;Saving &amp;#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+
+
+function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\//, &amp;#39;&amp;#39;)
+        .replace(/\/$/, &amp;#39;&amp;#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturulamadı.&amp;#39;);
+        phantom.exit();
+    }
+    console.log(&amp;#39;&amp;quot;&amp;#39; + dir + &amp;#39;&amp;quot; oluşturuldu.&amp;#39;);
+    return dir;
+}
+
+function getFileName() {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &amp;lt;= 9 ? &amp;#39;0&amp;#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&amp;#39;-&amp;#39;) + &amp;#39;_&amp;#39; + time.join(&amp;#39;-&amp;#39;) + &amp;quot;.png&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;eğer herşey doğru ise ilk ekran görüntümüzü alalım.&lt;/p&gt;
+&lt;h3 id=&quot;ilk-ekran-g-r-nt-s-&quot;&gt;ilk ekran görüntüsü&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;phantomjs rssg.js https://nodejs-dersleri.github.io/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/ilk-ekran-goruntusu.png&quot; alt=&quot;ilk-ekran-goruntusu&quot;&gt;&lt;/p&gt;
+&lt;p&gt;klasörümüzde ise aşşağıdaki gibi bir ekran görüntüsü olması gerekiyor.
+&lt;img src=&quot;/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/2015-11-22_22-03-19-449.png&quot; alt=&quot;ilk-ekran-goruntusu&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Gördüğünüz gibi ekran görüntüsü hazır ama bir problem var viewports dizimizin ilk nesnesini gönderdik yani &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    width : 1200,
+    height : 800
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;fakat çıktıda yükseklik 800px değil, aslında olması gereken sonuç tam olarakta bu;
+viewports dediğimiz şey aslında bir nevi pencere boyutu yani 1200x800 bir çözünürlükte siteyi açtiğinizda sitenin Y eksininde sadece 800px’lik kısmını görüyorsunuz? hayır scroll yaparak tüm yükseklikte gezmeniz mümkün
+burdaki sonuçta aynen bu.
+bir sonraki yazımızda hem farklı boyutlarda hemde görüntüyü kırparak ve bunları paremetrelere dayalı olarak yapacağız.&lt;/p&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    <item>
       <title>Npm modulleri - Chalk nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</link>
-      <pubDate>Fri, 06 Nov 2015 23:30:00 +0200</pubDate>
+      <pubDate>Fri, 06 Nov 2015 23:30:00 +0300</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-chalk-nedir/</guid>
       <author></author>
       <description>&lt;p&gt;Chalk, colors, cli-color modülleri aslında aynı işe yarıyor. Terminalde verdiğiniz çıktıları renklendirip font’ları ile farkındalık yaratabilirsiniz.&lt;/p&gt;
@@ -184,7 +867,7 @@ console.log(
     <item>
       <title>Npm modulleri - FTP nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-ftp-nedir/</link>
-      <pubDate>Wed, 04 Nov 2015 23:30:00 +0200</pubDate>
+      <pubDate>Wed, 04 Nov 2015 23:30:00 +0300</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-ftp-nedir/</guid>
       <author></author>
       <description>&lt;p&gt;&lt;code&gt;ftp&lt;/code&gt; modülü standart ftp protokollerini kullanarak ftp server’a bağlantı yapmamızı sağlayan bir modül. Minimal ftp adında bir konu başlığımız mevcut. Bu konuyu videolu olarak anlatmayı düşünüyorum. Şimdilik sadece &lt;code&gt;ftp&lt;/code&gt; modülünün nasıl çalıştığını anlatacağım.&lt;/p&gt;
@@ -302,7 +985,7 @@ client.connect(account);
     <item>
       <title>Npm modulleri - Inquirerjs nedir?</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-moduleri-inquirerjs-nedir/</link>
-      <pubDate>Tue, 03 Nov 2015 23:30:00 +0200</pubDate>
+      <pubDate>Tue, 03 Nov 2015 23:30:00 +0300</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-moduleri-inquirerjs-nedir/</guid>
       <author></author>
       <description>&lt;p&gt;Yeoman ile proje oluşturduğumuzda ya da &lt;code&gt;npm init&lt;/code&gt; yaptığımızda karşımıza bazı sorular gelir. Inquirerjs’le tam olarak bunu yapcağız.&lt;/p&gt;
@@ -372,7 +1055,7 @@ inquirer.prompt(questions, function( answers ) {
     <item>
       <title>Npm modül yapımı 1</title>
       <link>http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/</link>
-      <pubDate>Mon, 02 Nov 2015 00:30:00 +0200</pubDate>
+      <pubDate>Mon, 02 Nov 2015 00:30:00 +0300</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-1/</guid>
       <author></author>
       <description>&lt;p&gt;Npm için yapacağımız bu modül her çağırdığımızda bize benzersiz ID’ler üretecek. Modülümüzü oluşturduktan sonra küçük bir test yazaıp onaydan geçirdikten sonra npm sitesine kayıt işlemini yapalım.&lt;/p&gt;
@@ -485,7 +1168,7 @@ test:
     <item>
       <title>Nodejs ile screen scraping</title>
       <link>http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</link>
-      <pubDate>Sun, 01 Nov 2015 16:00:00 +0200</pubDate>
+      <pubDate>Sun, 01 Nov 2015 16:00:00 +0300</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-ile-screen-scraping/</guid>
       <author></author>
       <description>&lt;p&gt;Herhangi bir siteden istediğiniz verileri jQuery core komutlarıyla alabilirsiniz. Bunun için &lt;code&gt;request&lt;/code&gt; ve &lt;code&gt;cheerio&lt;/code&gt; npm modullerini kullanacağız.&lt;/p&gt;

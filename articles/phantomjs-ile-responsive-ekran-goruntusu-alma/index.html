@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Phantomjs ile responsive ekran görüntüsü alma - 1 - Nodejs Dersleri
+    </title>
+    <!-- begin :og block-->
+    <meta property="og:title" content="Phantomjs ile responsive ekran görüntüsü alma - 1">
+    <meta property="og:site_name" content="Nodejs Dersleri">
+    <meta property="og:url" content="http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/">
+    <meta property="og:image" content="http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/ilk-ekran-goruntusu.png">
+    <!-- begin :og block-->
+    <link rel="alternate" href="http://nodejs-dersleri.github.io/feed.xml" type="application/rss+xml" title="NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
+    <link rel="stylesheet" href="/css/normalize.css?v=66647f66">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css?v=66647f66">
+    <link rel="stylesheet" href="/fonts/octicons/octicons.css?v=66647f66">
+    <link rel="stylesheet" href="/fonts/socicon/socicon.css?v=66647f66">
+    <link rel="stylesheet" href="/css/main.css?v=66647f66">
+  </head>
+  <body class="article-detail">
+    <!-- Begin: Aside-->
+    <aside id="particles-js">
+      <h1><a href="http://nodejs-dersleri.github.io">Nodejs Dersleri</a></h1>
+      <p>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</p>
+    </aside>
+    <!-- End: Aside-->
+    <!-- Begin: Content-->
+    <main> 
+      <nav class="clearfix"><a href="/">Nodejs</a><a href="/archive.html">Arşiv</a><a href="https://www.linkedin.com/grps/Nodejs-Dersleri-8422784" target="_blank" class="social"><span class="socicon socicon-linkedin"></span></a><a href="https://twitter.com/nodejsdersleri" target="_blank" class="social"><span class="socicon socicon-twitter"></span></a><a href="https://www.youtube.com/channel/UCkgCOVtZMEtxwmfgqAyZsXA" target="_blank" class="social"><span class="socicon socicon-youtube"></span></a><a href="https://github.com/nodejs-dersleri" target="_blank" class="social"><span class="octicon octicon-logo-github"></span></a></nav>
+      <article class="article markdown-body">
+        <h2>Phantomjs ile responsive ekran görüntüsü alma - 1</h2>
+        <p class="author"><span class="octicon octicon-pencil"> </span> <span class="author"><a href="http://www.github.com/salihsagdilek">Salih Sağdilek</a></span>
+        </p>
+        <section class="project blankslate">
+          <p><span class="octicon octicon-comment"></span>Amaç: Phantomjs ile responsive ekran görüntüsü kaydetmek
+          </p><a href="https://github.com/salihsagdilek/rssg" class="btn btn-primary"><span class="octicon octicon-mark-github"></span>Kaynak kod</a>
+        </section><br>
+        <section class="content"><p>Phantomjs kullanarak cli üzerinden belli bir sayfanın farklı çözünürlüklerdeki görüntüsü&nbsp;kaydedeceğiz.</p>
+<hr>
+<h3 id="gereksinimler">Gereksinimler</h3>
+<ul>
+<li>Phantomjs</li>
+</ul>
+<p>Yazacağımız kodlar phantomjs üzerinden çalışacağı için phantomjs’e bağımlıdır, aşşağıdaki adresten phantomjs’i indirip&nbsp;kurabilirsiniz.</p>
+<p><a href="http://phantomjs.org/download.html">http://phantomjs.org/download.html</a></p>
+<h3 id="rssg-js">rssg.js</h3>
+<p>Öncelikle kodlarımızı yazmak için bir dosya açmamız gerekiyor, ben responsive screen shot grabber’ın kısaltması olan <strong>rssg.js</strong> olarak açacağım anlatım boyuncada bunun üzerinden devam&nbsp;edeceğim.</p>
+<h3 id="system-args">system.args</h3>
+<pre><code>var args = require(&#39;system&#39;).args;
+</code></pre><p>Sistem modülünün çeşitli özellikleri mevcut <a href="http://phantomjs.org/api/system/">http://phantomjs.org/api/system/</a> buradan bunlara erişebilirsiniz, bize bu anlatımda sadece <strong>args</strong> özelliği&nbsp;gerekli.</p>
+<p>system.args özelliği javascriptten bildiğimiz arguments ile aynı görevi yapmakta, yani girilen her parametreyi bir dizi olarak bize&nbsp;döndürmektedir.</p>
+<p>bir örnek ile pekiştiricek&nbsp;olursak;</p>
+<pre><code>function test(){
+    return arguments;
+}
+var cevap = test(1,2,3)
+</code></pre><p>cevap nesnesi bize geriye <strong>[1,2,3]</strong> döndürür, cevap[0] ise <strong>1</strong>;
+system.arg’da aynen bu işi yapmakta, phantom js ile örneklendiricek olursak&nbsp;eğer;</p>
+<pre><code>phantomjs rssg.js https://nodejs-dersleri.github.io/
+</code></pre><p>komutu tetiklediğimizde args nesnemiz şu şekilde&nbsp;olacaktır;</p>
+<p>[‘rssg.js’, ‘<a href="https://nodejs-dersleri.github.io/">https://nodejs-dersleri.github.io/</a>‘]</p>
+<p>dipnot: cli’dan gelen her parametre string&nbsp;formatındadır.</p>
+<h3 id="fs-filesystem-">fs&nbsp;(filesystem)</h3>
+<pre><code>var fs = require(&#39;fs&#39;);
+</code></pre><p>Adındanda anlaşılacağı gibi dosya sistemi api’ı, dosyalar ile ilgili birçok işlemi içinde barındıran mödül.
+Mevcut olan tüm api listesine buradan ulaşabilirsiniz <a href="http://phantomjs.org/api/fs/">http://phantomjs.org/api/fs/</a></p>
+<p>dipnot:kullanılabilir özelliklere yukarıda ki adresden bakınız node.js üzerindeki fs api’ı ile aynı&nbsp;değildir. </p>
+<h3 id="webpage">Webpage</h3>
+<p>phantomjs’in olmazsa olmazı diyebiliriz.
+sayfalarımızı bu api sayesinde acip ekran görüntüsünü&nbsp;alacağız</p>
+<pre><code>var page = new WebPage();
+</code></pre><p>tüm api listesine buradan ulaşabilirsiniz <a href="http://phantomjs.org/api/webpage/">http://phantomjs.org/api/webpage/</a></p>
+<h3 id="url-varm-">Url varmı&nbsp;?</h3>
+<pre><code>if ( 1 === args.length ) {
+    console.log(&#39;Url adresi girmediniz&#39;);
+    phantom.exit();
+}
+</code></pre><p>yukarıdaki kodu açıklayacak&nbsp;olursak;</p>
+<ul>
+<li>herşeyden önce if koşulu size biraz farklı gelmiş olabilir <strong>Yoda conditions</strong> jargonu diye geçer ve çeşitli avantajları vardır (ben henüz bir dezavantajını görmedim) bunları ilgili wikipedia sayfasından ve çeşitli kaynaklardan bulabilirsiniz <a href="https://en.wikipedia.org/wiki/Yoda_conditions">https://en.wikipedia.org/wiki/Yoda_conditions</a></li>
+<li><strong>1 === args.length</strong>
+unutmayın ilk parametre dosyamızın adı eğer length 1’e eşit ise args nesnem <strong>[‘rssg.js’]</strong> şeklindedir herhangi bir parametre girilmemiş, dolasıyla bağlanacak bir url adresimiz yok&nbsp;demektir.</li>
+<li>eğer koşulumuz sağlanırsa <strong>phantom.exit();</strong> ile işlemleri&nbsp;sonlandırıyoruz.</li>
+</ul>
+<h3 id="url-address">url&nbsp;address</h3>
+<pre><code>var urlAddress = args[1].toLowerCase();
+</code></pre><p>Unutmayın gelen her parametre string (kullanıcı 1 değerini girmiş olsa bile string olarak geleceği için string mi diye kontrol etmemize gerek yok), dolasıyla string nesnesinin her özelliğini kullanabiliriz.
+Daha sonra bu url adresini klasör oluştururken’de kullanacağız o yüzden düzenli bir yapı elde etmek için gelen adresi toLowerCase() ile tümünü küçük harflere&nbsp;çeviriyoruz.</p>
+<h3 id="-z-n-rl-kler">çözünürlükler</h3>
+<p>Hangi çözünürlüklerde çıktılar alacağımızı belirleyeceğimiz bir dizi&nbsp;yaratıyoruz.</p>
+<pre><code>var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+</code></pre><h3 id="rssg-js">rssg.js</h3>
+<p>karışıklıkların önüne geçmek için dosyamızın şuanki hali şu şekilde&nbsp;olmalı.</p>
+<pre><code>var args = require(&#39;system&#39;).args;
+var fs = require(&#39;fs&#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&#39;Url adresi girmediniz&#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+</code></pre><h3 id="test-zaman-">Test&nbsp;Zamanı</h3>
+<pre><code>page.open(urlAddress, function (status) {
+    if ( &#39;success&#39; !== status ) {
+        console.log(&#39;Adrese bağlanılamadı.&#39;);
+    } else {
+        console.log(urlAddress, &#39;bağlantı başarılı&#39;);
+    }
+    phantom.exit();
+});
+</code></pre><p>Bu kodu’da ekledikten sonra <strong>phantomjs rssg.js <a href="http://www.google.com">http://www.google.com</a></strong>
+komutu ile terminalden kontrol ediyoruz
+<img src="/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/test.png" alt="test"></p>
+<h3 id="klas-r-olu-tural-m">klasör&nbsp;oluşturalım</h3>
+<p>ilk önce url adresini klasör adına dönüştürcek ve oluşturcak bir fonksiyon&nbsp;yazalım</p>
+<pre><code>function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\/, &#39;&#39;)
+        .replace(/\/$/, &#39;&#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&#39;&quot;&#39; + dir + &#39;&quot; oluşturulamadı.&#39;);
+        phantom.exit();
+    }
+    console.log(&#39;&quot;&#39; + dir + &#39;&quot; oluşturuldu.&#39;);
+    return dir;
+}
+</code></pre><p>kısaca fonksiyonumuzu&nbsp;açıklayalım,</p>
+<ul>
+<li>fonksiyonumuz 1 parametre alıyor ve bunun url adresi olması&nbsp;bekleniyor</li>
+<li>gelen url adresi regex kullanarak replace methodu yardımıyla temizleniyor ve <strong>dir</strong> değişkenine aktarılıyor.<ul>
+<li>/^(http|https):\/\/ <strong>http://</strong> yada <strong>https://</strong> ile başyalanları demek anlamına&nbsp;geliyor</li>
+<li>/\/$/ <strong>/</strong> ile bitenler anlamına&nbsp;geliyor</li>
+</ul>
+</li>
+<li>fs.makeTree() fonksiyonu string alir ve boolean bir değer döner aldığı string paremetreye göre klasör oluşturur <a href="http://phantomjs.org/api/fs/method/make-tree.html">http://phantomjs.org/api/fs/method/make-tree.html</a><ul>
+<li>if ( !fs.makeTree(dir) ) az önce oluşturduğumuz path i verdik eğer ki klasörü oluşturursa geriye true değerini dönecek bu bizim istediğimiz sonuç gelen sonuçu tersine ceviriyoruz true ise false, false ise true yapıyoruz. fonksiyonunun bize false donmesi durumunda if koşulu true olucak ve içeriye giricek.
+bu durumda console’a klasör oluşturulamadı diyip phantomjs’den çıkış&nbsp;yapıyoruz.</li>
+<li>eğer ki if koşulu gerçekleşmez ise geriye path’i (klasör yolunu)&nbsp;döndürüyoruz.</li>
+</ul>
+</li>
+</ul>
+<p>bağlantı kodunu&nbsp;güncelleyelim</p>
+<pre><code>page.open(urlAddress, function (status) {
+    if ( &#39;success&#39; !== status ) {
+        console.log(&#39;Adrese bağlanılamadı.&#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+    }
+    phantom.exit();
+});
+</code></pre><pre><code>phantomjs rssg.js http://www.google.com
+</code></pre><p><img src="/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/klasor.png" alt="klasor"></p>
+<p> ve dizinimizde klasör oluşmuş olması&nbsp;gerekiyor.</p>
+<h3 id="dosya-ad-">dosya&nbsp;adı</h3>
+<p>Aynı sayfa için birçok defa deneme yapılabileceği için benzersiz dosya isimleri oluşturmamız lazım ve aralarındaki farkları görmek açısından bence tarihe göre dosya isimlendirmesi yapmak mantıklı&nbsp;olur.</p>
+<pre><code>function getFileName(viewport) {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &lt;= 9 ? &#39;0&#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &lt;= 9 ? &#39;0&#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &lt;= 9 ? &#39;0&#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&#39;-&#39;) + &#39;_&#39; + time.join(&#39;-&#39;) + &quot;.png&quot;;
+}
+</code></pre><p>yukarıdaki kod’da çok fazla açıklanacak birşey yok aslında sadece sürekli <strong>+</strong> ile concat etmek yerine parçaları diziye atayıp <strong>-</strong> ile&nbsp;birleştiriyorum.</p>
+<h3 id="ilk-ekran-g-r-nt-s-i-in-son-haz-rl-k">ilk ekran görüntüsü için son&nbsp;hazırlık</h3>
+<p>bağlantı kodumuzu şu şekilde&nbsp;güncelleyelim</p>
+<pre><code>page.open(urlAddress, function (status) {
+    if ( &#39;success&#39; !== status ) {
+        console.log(&#39;Adrese bağlanılamadı.&#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+
+        page.viewportSize = viewports[0];
+        var output = folder + &quot;/&quot; + getFileName();
+        console.log(&#39;Saving &#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+</code></pre><p>Yeni gelen komutlarımızı tanıyalım webpage modülünün linkini yukarı belirtmiştim zaten, detaylı bakmak için yukarıda bağlantıyı&nbsp;kullanabilirsiniz.</p>
+<ul>
+<li><strong>page.viewportSize</strong> sayfa görünüm boyutunu ayarlamak için kullanılıyor. <a href="http://phantomjs.org/api/webpage/property/viewport-size.html">http://phantomjs.org/api/webpage/property/viewport-size.html</a></li>
+<li><strong>page.render</strong> sayfayı kaydetmet için kullanılıyor çıktı formatları <a href="http://phantomjs.org/api/webpage/method/render.html">http://phantomjs.org/api/webpage/method/render.html</a><ul>
+<li><span class="caps">PNG</span></li>
+<li><span class="caps">GIF</span></li>
+<li><span class="caps">JPEG</span></li>
+<li><span class="caps">PDF</span></li>
+</ul>
+</li>
+</ul>
+<h3 id="rssg-js">rssg.js</h3>
+<p>dosyamızın son hali bu şekilde&nbsp;olmalı</p>
+<pre><code>var args = require(&#39;system&#39;).args;
+var fs = require(&#39;fs&#39;);
+var page = new WebPage();
+
+if ( 1 === args.length ) {
+    console.log(&#39;Url addresi girmediniz&#39;);
+    phantom.exit();
+}
+
+var urlAddress = args[1].toLowerCase();
+
+var viewports = [
+    {
+        width : 1200,
+        height : 800
+    },
+    {
+        width : 1024,
+        height : 768
+    },
+    {
+        width : 768,
+        height : 1024
+    },
+    {
+        width : 480,
+        height : 640
+    },
+    {
+        width : 320,
+        height : 480
+    }
+];
+
+page.open(urlAddress, function (status) {
+    if ( &#39;success&#39; !== status ) {
+        console.log(&#39;Adrese bağlanılamadı.&#39;);
+    } else {
+        var folder = urlToDir(urlAddress);
+
+        page.viewportSize = viewports[0];
+        var output = folder + &quot;/&quot; + getFileName();
+        console.log(&#39;Saving &#39; + output);
+        page.render(output);
+    }
+    phantom.exit();
+});
+
+
+function urlToDir(url) {
+    var dir = url
+        .replace(/^(http|https):\/\//, &#39;&#39;)
+        .replace(/\/$/, &#39;&#39;);
+
+    if ( !fs.makeTree(dir) ) {
+        console.log(&#39;&quot;&#39; + dir + &#39;&quot; oluşturulamadı.&#39;);
+        phantom.exit();
+    }
+    console.log(&#39;&quot;&#39; + dir + &#39;&quot; oluşturuldu.&#39;);
+    return dir;
+}
+
+function getFileName() {
+    var d = new Date();
+    var date = [
+        d.getUTCFullYear(),
+        d.getUTCMonth() + 1,
+        d.getUTCDate()
+    ];
+    var time = [
+        d.getHours() &lt;= 9 ? &#39;0&#39; + d.getHours() : d.getHours(),
+        d.getMinutes() &lt;= 9 ? &#39;0&#39; + d.getMinutes() : d.getMinutes(),
+        d.getSeconds() &lt;= 9 ? &#39;0&#39; + d.getSeconds() : d.getSeconds(),
+        d.getMilliseconds()
+    ];
+    return date.join(&#39;-&#39;) + &#39;_&#39; + time.join(&#39;-&#39;) + &quot;.png&quot;;
+}
+</code></pre><p>eğer herşey doğru ise ilk ekran görüntümüzü&nbsp;alalım.</p>
+<h3 id="ilk-ekran-g-r-nt-s-">ilk ekran&nbsp;görüntüsü</h3>
+<pre><code>phantomjs rssg.js https://nodejs-dersleri.github.io/
+</code></pre><p><img src="/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/ilk-ekran-goruntusu.png" alt="ilk-ekran-goruntusu"></p>
+<p>klasörümüzde ise aşşağıdaki gibi bir ekran görüntüsü olması gerekiyor.
+<img src="/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/2015-11-22_22-03-19-449.png" alt="ilk-ekran-goruntusu"></p>
+<p>Gördüğünüz gibi ekran görüntüsü hazır ama bir problem var viewports dizimizin ilk nesnesini gönderdik&nbsp;yani </p>
+<pre><code>{
+    width : 1200,
+    height : 800
+}
+</code></pre><p>fakat çıktıda yükseklik 800px değil, aslında olması gereken sonuç tam olarakta bu;
+viewports dediğimiz şey aslında bir nevi pencere boyutu yani 1200x800 bir çözünürlükte siteyi açtiğinizda sitenin Y eksininde sadece 800px’lik kısmını görüyorsunuz? hayır scroll yaparak tüm yükseklikte gezmeniz mümkün
+burdaki sonuçta aynen bu.
+bir sonraki yazımızda hem farklı boyutlarda hemde görüntüyü kırparak ve bunları paremetrelere dayalı olarak&nbsp;yapacağız.</p>
+<hr>
+</section>
+        <div class="related clearfix">
+          <h4>Benzer Konular</h4><a href="/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/" title="phantomjs,resposive ekran görüntüsü,screenshot" style="background-image:url(/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/ilk-ekran-goruntusu.png" class="item"><span>Phantomjs ile responsive ekran görüntüsü alma - 1</span></a>
+        </div>
+        <div id="disqus_thread"> </div>
+        <script>
+          var disqus_config = function () {
+          this.page.url = 'http://nodejs-dersleri.github.io//articles/phantomjs-ile-responsive-ekran-goruntusu-alma/';
+          this.page.identifier = '/articles/phantomjs-ile-responsive-ekran-goruntusu-alma/'; 
+          };
+          
+          (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = '//nodejsdersleri.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      </article>
+      <!-- Begin: Footer-->
+      <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascript/particles.min.js?v=66647f66"></script>
+    <script src="/javascript/canvas.js?v=66647f66"></script>
+    <script src="/lib/highlight/highlight.pack.js?v=66647f66"></script>
+    <script>
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-69517099-1', 'auto');
+      ga('send', 'pageview');
+          
+          
+    </script>
+  </body>
+</html>
+<!--section.about-->
+<!--!=contents['about.md'].html-->
+<!-- End: Footer-->
+<!-- End: Content-->
