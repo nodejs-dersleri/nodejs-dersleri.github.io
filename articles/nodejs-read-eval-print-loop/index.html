@@ -14,11 +14,11 @@
     <!-- begin :og block-->
     <link rel="alternate" href="http://nodejs-dersleri.github.io/feed.xml" type="application/rss+xml" title="NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:800">
-    <link rel="stylesheet" href="/css/normalize.css?v=a029b249">
-    <link rel="stylesheet" href="/lib/highlight/styles/github.css?v=a029b249">
-    <link rel="stylesheet" href="/fonts/octicons/octicons.css?v=a029b249">
-    <link rel="stylesheet" href="/fonts/socicon/socicon.css?v=a029b249">
-    <link rel="stylesheet" href="/css/main.css?v=a029b249">
+    <link rel="stylesheet" href="/css/normalize.css?v=6fe8dc5d">
+    <link rel="stylesheet" href="/lib/highlight/styles/github.css?v=6fe8dc5d">
+    <link rel="stylesheet" href="/fonts/octicons/octicons.css?v=6fe8dc5d">
+    <link rel="stylesheet" href="/fonts/socicon/socicon.css?v=6fe8dc5d">
+    <link rel="stylesheet" href="/css/main.css?v=6fe8dc5d">
   </head>
   <body class="article-detail">
     <!-- Begin: Aside-->
@@ -35,7 +35,7 @@
         <p class="author"><span class="octicon octicon-pencil"> </span> <span class="author"><a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span>
         </p><br>
         <section class="content"><h3 id="repl-nedir-"><span class="caps">REPL</span>&nbsp;nedir?</h3>
-<p>Terminalden interaktif bir şekilde JavaScript çalıştırmak ve sonuçlarını görmeye yarar. Debug, test ya da bir şeyler denemek için&nbsp;kullanılabilir.</p>
+<p>Terminalden interaktif bir şekilde JavaScript çalıştırarak sonuçlarını görmeye yarar. Debug, test ya da bir şeyler denemek için&nbsp;kullanılabilir.</p>
 <p>Hızlıca bazı kodları denemek istiyorsanız her defasında <code>npm init</code> ile bir proje yaratıp, bir index.js üzerinden çalışmaktansa terminalden sadece <code>node</code> yazarak Repl’e giriş yapmış&nbsp;oluyoruz.</p>
 <hr>
 <p><img src="/articles/nodejs-read-eval-print-loop/nodejs-repl.png" alt="nodejs-repl"></p>
@@ -92,7 +92,7 @@ console.warn = function( e ) {
 ...process.stdout.write( chalk.red(e) )
 ...process.exit(1)
 ...};
-</code></pre><p>Not: Eğer multiline fonksiyon yazarken hatalı bir işlem yaparsanız <code>kntrl+c</code> yaparsanız çıkış yapacaktır. <code>.clear</code> ya da <code>.break</code> yazarakda çıkış&nbsp;yapabilirsiniz.</p>
+</code></pre><p>Not: Eğer multiline fonksiyon yazarken hatalı bir işlem yaparsanız <code>kntrl+c</code> yaparsanız çıkış yapacaktır. <code>.clear</code> ya da <code>.break</code> yazarak da çıkış&nbsp;yapabilirsiniz.</p>
 <h4 id="repl-komutlar-"><span class="caps">REPL</span>&nbsp;komutları</h4>
 <p><br></p>
 <p><strong><code>.help</code></strong> komutları unuttuysanız hızlıca göz&nbsp;atabilirsiniz.</p>
@@ -105,7 +105,7 @@ load    Load JS from a file into the REPL session
 save    Save all evaluated commands in this REPL session to a file
 </code></pre><p><strong><code>.break, .clear</code></strong> Multiline yazımda satırdan çıkmak ve işlemi iptal etmek için&nbsp;kullanılır.</p>
 <p><strong><code>.exit</code></strong> <span class="caps">REPL</span>’den çıkış&nbsp;yapar.</p>
-<p><strong><code>.save main.js</code></strong> <span class="caps">REPL</span>’den girmiş olduğunuz verileri saklamak isterseniz kullanabilirsiniz. main.js klasör ismi olarak&nbsp;belirlenir.</p>
+<p><strong><code>.save main.js</code></strong> <span class="caps">REPL</span>’den girmiş olduğunuz verileri saklamak isterseniz kullanabilirsiniz. main.js kaydedeceğimiz dosyanın ismi. İstediğiniz isimde&nbsp;kaydedebilirsiniz.</p>
 <p><strong><code>.load main.js</code></strong> Path belirtilerek <span class="caps">REPL</span> dosyasını tekrar çağırabilir ve kaldığınız yerden devam&nbsp;edebilirsiniz.</p>
 <p><strong><code>kntrl + c</code></strong> .break ile aynı işlemi yapar, içinde bulunulan fonksiyondan çıkış&nbsp;yapar.</p>
 <p><strong><code>kntrl + c (iki kere)</code></strong> <span class="caps">REPL</span>’den çıkmaya&nbsp;yarar.</p>
@@ -123,7 +123,7 @@ assert                        b
 buffer                        child_process
 clearImmediate                clearInterval
 </code></pre><h4 id="faydal-eyler">Faydalı&nbsp;şeyler</h4>
-<p><span class="caps">REPL</span> içindeyken ekranı temizlemek isterseniz <code>kntrl + cmd + L</code> yaparsanız ekranınız mis gibi temiz olur yazamaya devam edebilirsiniz. <code>clear</code> komutuyla aynı içe yarar farkı <span class="caps">REPL</span> içerisinde clear ya da tanımlı herhangi bir Alias yazarsanız hata alırsınız. Bunun yerine kısayol ile hızlıca temizlik yapabilirsiniz&nbsp;;)</p>
+<p><span class="caps">REPL</span> içindeyken ekranı temizlemek isterseniz <code>kntrl + cmd + L</code> yaparsanız ekranınız mis gibi olur yazmaya devam edebilirsiniz. <code>clear</code> komutuyla aynı işe yarar farkı <span class="caps">REPL</span> içerisinde clear ya da tanımlı herhangi bir Alias yazarsanız hata alırsınız. Bunun yerine kısayol ile hızlıca temizlik yapabilirsiniz&nbsp;;)</p>
 <h4 id="okudu-unuz-i-in-te-ekk-r-ederim">Okuduğunuz için teşekkür&nbsp;ederim</h4>
 <hr>
 </section>
@@ -150,9 +150,9 @@ clearImmediate                clearInterval
       <footer><span class="made-with-heart"><span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"> </span> by  <a href="http://www.github.com/arifcakiroglu">Arif Cakiroglu</a></span></footer>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/javascript/particles.min.js?v=a029b249"></script>
-    <script src="/javascript/canvas.js?v=a029b249"></script>
-    <script src="/lib/highlight/highlight.pack.js?v=a029b249"></script>
+    <script src="/javascript/particles.min.js?v=6fe8dc5d"></script>
+    <script src="/javascript/canvas.js?v=6fe8dc5d"></script>
+    <script src="/lib/highlight/highlight.pack.js?v=6fe8dc5d"></script>
     <script>
       $(document).ready(function() {
         $('pre code').each(function(i, block) {

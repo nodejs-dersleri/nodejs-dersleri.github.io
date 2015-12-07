@@ -15,7 +15,7 @@
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-read-eval-print-loop/</guid>
       <author></author>
       <description>&lt;h3 id=&quot;repl-nedir-&quot;&gt;REPL nedir?&lt;/h3&gt;
-&lt;p&gt;Terminalden interaktif bir şekilde JavaScript çalıştırmak ve sonuçlarını görmeye yarar. Debug, test ya da bir şeyler denemek için kullanılabilir.&lt;/p&gt;
+&lt;p&gt;Terminalden interaktif bir şekilde JavaScript çalıştırarak sonuçlarını görmeye yarar. Debug, test ya da bir şeyler denemek için kullanılabilir.&lt;/p&gt;
 &lt;p&gt;Hızlıca bazı kodları denemek istiyorsanız her defasında &lt;code&gt;npm init&lt;/code&gt; ile bir proje yaratıp, bir index.js üzerinden çalışmaktansa terminalden sadece &lt;code&gt;node&lt;/code&gt; yazarak Repl’e giriş yapmış oluyoruz.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;img src=&quot;/articles/nodejs-read-eval-print-loop/nodejs-repl.png&quot; alt=&quot;nodejs-repl&quot;&gt;&lt;/p&gt;
@@ -72,7 +72,7 @@ console.warn = function( e ) {
 ...process.stdout.write( chalk.red(e) )
 ...process.exit(1)
 ...};
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Not: Eğer multiline fonksiyon yazarken hatalı bir işlem yaparsanız &lt;code&gt;kntrl+c&lt;/code&gt; yaparsanız çıkış yapacaktır. &lt;code&gt;.clear&lt;/code&gt; ya da &lt;code&gt;.break&lt;/code&gt; yazarakda çıkış yapabilirsiniz.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Not: Eğer multiline fonksiyon yazarken hatalı bir işlem yaparsanız &lt;code&gt;kntrl+c&lt;/code&gt; yaparsanız çıkış yapacaktır. &lt;code&gt;.clear&lt;/code&gt; ya da &lt;code&gt;.break&lt;/code&gt; yazarak da çıkış yapabilirsiniz.&lt;/p&gt;
 &lt;h4 id=&quot;repl-komutlar-&quot;&gt;REPL komutları&lt;/h4&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;.help&lt;/code&gt;&lt;/strong&gt; komutları unuttuysanız hızlıca göz atabilirsiniz.&lt;/p&gt;
@@ -85,7 +85,7 @@ load    Load JS from a file into the REPL session
 save    Save all evaluated commands in this REPL session to a file
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;.break, .clear&lt;/code&gt;&lt;/strong&gt; Multiline yazımda satırdan çıkmak ve işlemi iptal etmek için kullanılır.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;.exit&lt;/code&gt;&lt;/strong&gt; REPL’den çıkış yapar.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;code&gt;.save main.js&lt;/code&gt;&lt;/strong&gt; REPL’den girmiş olduğunuz verileri saklamak isterseniz kullanabilirsiniz. main.js klasör ismi olarak belirlenir.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;.save main.js&lt;/code&gt;&lt;/strong&gt; REPL’den girmiş olduğunuz verileri saklamak isterseniz kullanabilirsiniz. main.js kaydedeceğimiz dosyanın ismi. İstediğiniz isimde kaydedebilirsiniz.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;.load main.js&lt;/code&gt;&lt;/strong&gt; Path belirtilerek REPL dosyasını tekrar çağırabilir ve kaldığınız yerden devam edebilirsiniz.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;kntrl + c&lt;/code&gt;&lt;/strong&gt; .break ile aynı işlemi yapar, içinde bulunulan fonksiyondan çıkış yapar.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;kntrl + c (iki kere)&lt;/code&gt;&lt;/strong&gt; REPL’den çıkmaya yarar.&lt;/p&gt;
@@ -103,7 +103,7 @@ assert                        b
 buffer                        child_process
 clearImmediate                clearInterval
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;faydal-eyler&quot;&gt;Faydalı şeyler&lt;/h4&gt;
-&lt;p&gt;REPL içindeyken ekranı temizlemek isterseniz &lt;code&gt;kntrl + cmd + L&lt;/code&gt; yaparsanız ekranınız mis gibi temiz olur yazamaya devam edebilirsiniz. &lt;code&gt;clear&lt;/code&gt; komutuyla aynı içe yarar farkı REPL içerisinde clear ya da tanımlı herhangi bir Alias yazarsanız hata alırsınız. Bunun yerine kısayol ile hızlıca temizlik yapabilirsiniz ;)&lt;/p&gt;
+&lt;p&gt;REPL içindeyken ekranı temizlemek isterseniz &lt;code&gt;kntrl + cmd + L&lt;/code&gt; yaparsanız ekranınız mis gibi olur yazmaya devam edebilirsiniz. &lt;code&gt;clear&lt;/code&gt; komutuyla aynı işe yarar farkı REPL içerisinde clear ya da tanımlı herhangi bir Alias yazarsanız hata alırsınız. Bunun yerine kısayol ile hızlıca temizlik yapabilirsiniz ;)&lt;/p&gt;
 &lt;h4 id=&quot;okudu-unuz-i-in-te-ekk-r-ederim&quot;&gt;Okuduğunuz için teşekkür ederim&lt;/h4&gt;
 &lt;hr&gt;
 </description>
