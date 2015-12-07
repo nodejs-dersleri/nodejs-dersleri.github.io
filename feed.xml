@@ -5,9 +5,109 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Mon, 23 Nov 2015 23:00:00 +0200</pubDate>
+    <pubDate>Mon, 07 Dec 2015 02:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Nodejs REPL(Read-Eval-Print-Loop)</title>
+      <link>http://nodejs-dersleri.github.io/articles/nodejs-read-eval-print-loop/</link>
+      <pubDate>Mon, 07 Dec 2015 02:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/nodejs-read-eval-print-loop/</guid>
+      <author></author>
+      <description>&lt;h3 id=&quot;repl-nedir-&quot;&gt;REPL nedir?&lt;/h3&gt;
+&lt;p&gt;Terminalden interaktif bir şekilde JavaScript çalıştırmak ve sonuçlarını görmeye yarar. Debug, test ya da bir şeyler denemek için kullanılabilir.&lt;/p&gt;
+&lt;p&gt;Hızlıca bazı kodları denemek istiyorsanız her defasında &lt;code&gt;npm init&lt;/code&gt; ile bir proje yaratıp, bir index.js üzerinden çalışmaktansa terminalden sadece &lt;code&gt;node&lt;/code&gt; yazarak Repl’e giriş yapmış oluyoruz.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/nodejs-read-eval-print-loop/nodejs-repl.png&quot; alt=&quot;nodejs-repl&quot;&gt;&lt;/p&gt;
+&lt;h4 id=&quot;matematik-i-lemleri&quot;&gt;Matematik işlemleri&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;λ node
+&amp;gt; 6 * 2
+12
+&amp;gt; 2 + 2
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;de-i-ken-tan-mlar-&quot;&gt;Değişken tanımları&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; var arr = [null, undefined, false]
+undefined
+&amp;gt; arr
+
+// sonuç:
+[ null, undefined, false ]
+
+&amp;gt; arr.forEach(function(val) {
+... console.log(val)
+... });
+
+// sonuç:
+null
+undefined
+false
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;repl-zellikleri&quot;&gt;REPL özellikleri&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_ altçizgi: en son çalıştırdığınız sorguyu işler&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;// değişkeni tanımladık
+width = 3 + 5;
+// altçizgi çıktı olarak işlemin sonucunu verdi
+_
+8
+// sadece altçizgi yazarak işmele devam ediyoruz
+&amp;gt; _ * 2
+16
+
+&amp;gt; a = [1,2,3]
+[ 1, 2, 3 ]
+&amp;gt; _.length
+3
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Multiline çalışmak&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Yazıma başladığınızda göreceksinizki enter yaptığınızda yazdığınız kodu işleme alacaktır.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;console.warn = function( e ) { process.stdout.write( e ) }
+[Function]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Eğer yazacağınız fonksiyon fazla satır tutacaksa süslü parantezden sonra enter yaparsanız bir alt satıra geçecektir. Süslü parantezi kapadıktan sonra enter yaparsanız kodu işleme alacaktır.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var chalk = require(&amp;#39;chalk&amp;#39;);
+undefined
+
+console.warn = function( e ) {
+...process.stdout.write( chalk.red(e) )
+...process.exit(1)
+...};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Not: Eğer multiline fonksiyon yazarken hatalı bir işlem yaparsanız &lt;code&gt;kntrl+c&lt;/code&gt; yaparsanız çıkış yapacaktır. &lt;code&gt;.clear&lt;/code&gt; ya da &lt;code&gt;.break&lt;/code&gt; yazarakda çıkış yapabilirsiniz.&lt;/p&gt;
+&lt;h4 id=&quot;repl-komutlar-&quot;&gt;REPL komutları&lt;/h4&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;.help&lt;/code&gt;&lt;/strong&gt; komutları unuttuysanız hızlıca göz atabilirsiniz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; .help
+break    Sometimes you get stuck, this gets you out
+clear    Alias for .break
+exit    Exit the repl
+help    Show repl options
+load    Load JS from a file into the REPL session
+save    Save all evaluated commands in this REPL session to a file
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;&lt;code&gt;.break, .clear&lt;/code&gt;&lt;/strong&gt; Multiline yazımda satırdan çıkmak ve işlemi iptal etmek için kullanılır.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;.exit&lt;/code&gt;&lt;/strong&gt; REPL’den çıkış yapar.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;.save main.js&lt;/code&gt;&lt;/strong&gt; REPL’den girmiş olduğunuz verileri saklamak isterseniz kullanabilirsiniz. main.js klasör ismi olarak belirlenir.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;.load main.js&lt;/code&gt;&lt;/strong&gt; Path belirtilerek REPL dosyasını tekrar çağırabilir ve kaldığınız yerden devam edebilirsiniz.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;kntrl + c&lt;/code&gt;&lt;/strong&gt; .break ile aynı işlemi yapar, içinde bulunulan fonksiyondan çıkış yapar.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;kntrl + c (iki kere)&lt;/code&gt;&lt;/strong&gt; REPL’den çıkmaya yarar.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;tab&lt;/code&gt;&lt;/strong&gt; Yazdığınız fonksiyon ve değişkenleri, global fonksiyonları görebilirsiniz. History olarak da tanımlayabiliriz.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tab çıktı örneği&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Map                           Promise
+Set                           Symbol
+Uint16Array                   Uint32Array
+Uint8Array                    Uint8ClampedArray
+WeakMap                       WeakSet
+dir                           a
+assert                        b
+buffer                        child_process
+clearImmediate                clearInterval
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;faydal-eyler&quot;&gt;Faydalı şeyler&lt;/h4&gt;
+&lt;p&gt;REPL içindeyken ekranı temizlemek isterseniz &lt;code&gt;kntrl + cmd + L&lt;/code&gt; yaparsanız ekranınız mis gibi temiz olur yazamaya devam edebilirsiniz. &lt;code&gt;clear&lt;/code&gt; komutuyla aynı içe yarar farkı REPL içerisinde clear ya da tanımlı herhangi bir Alias yazarsanız hata alırsınız. Bunun yerine kısayol ile hızlıca temizlik yapabilirsiniz ;)&lt;/p&gt;
+&lt;h4 id=&quot;okudu-unuz-i-in-te-ekk-r-ederim&quot;&gt;Okuduğunuz için teşekkür ederim&lt;/h4&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Phantomjs ile responsive ekran görüntüsü alma - 2</title>
       <link>http://nodejs-dersleri.github.io/articles/phantomjs-ile-responsive-ekran-goruntusu-alma-2/</link>
