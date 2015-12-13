@@ -5,9 +5,120 @@
     <atom:link href="http://nodejs-dersleri.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <link>http://nodejs-dersleri.github.io</link>
     <description>NODEJS İÇİN TÜRKÇE KAYNAK, NOTLAR, ÖRNEK UYGULAMALAR</description>
-    <pubDate>Mon, 07 Dec 2015 02:30:00 +0200</pubDate>
+    <pubDate>Sun, 13 Dec 2015 00:30:00 +0200</pubDate>
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
+    <item>
+      <title>Npm modül yapımı 2</title>
+      <link>http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-2/</link>
+      <pubDate>Sun, 13 Dec 2015 00:30:00 +0200</pubDate>
+      <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-2/</guid>
+      <author></author>
+      <description>&lt;p&gt;Yapmış olduğumuz modülü npm’e register edip semantik versiyonlamaya gözatacağız.
+Semantik versiyonlama hakkında daha fazla bilgiye &lt;a href=&quot;http://semver.org&quot;&gt;buradan&lt;/a&gt; ulaşabilirsiniz.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;/articles/npm-modul-yapimi-2/npm-modul-yapimi-2.png&quot; alt=&quot;modul info&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;npm-register&quot;&gt;Npm Register&lt;/h3&gt;
+&lt;p&gt;Öncelikle kullanıcı bilgilerimizi &lt;code&gt;npm adduser&lt;/code&gt; ile ekliyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;⏣ npm adduser
+Username: arifcakiroglu
+Password:
+Email: (this IS public) cakirogluarif@gmail.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;npm set&lt;/code&gt;ile bilgilerinizi npmrc dosyasına ekleyebilirsiniz. Bilgilerinize &lt;code&gt;~/.npmrc&lt;/code&gt; dosyasından ulaşabilirsiniz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm set init.author.name &amp;quot;Arif Cakiroglu&amp;quot;
+npm set init.author.email &amp;quot;cakirogluarif@gmail.com&amp;quot;
+npm set init.author.url &amp;quot;http://nodejs-dersleri.github.io&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Daha sonra oluşturduğumuz modül dizinine gidip &lt;code&gt;npm publish&lt;/code&gt; ile kayıt işlemine başlıyoruz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;⏣ npm publish
++ guidify@0.1.0
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;versiyonlama&quot;&gt;Versiyonlama&lt;/h4&gt;
+&lt;p&gt;Eğer versiyon değişikliği yapmadan tekrar göndermeye çalışırsak aşağıdaki gibi bir hata ile karşılaşırız.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm ERR! publish Failed PUT 403
+npm ERR! Darwin 15.0.0
+npm ERR! argv &amp;quot;/usr/local/bin/node&amp;quot; &amp;quot;/usr/local/bin/npm&amp;quot; &amp;quot;publish&amp;quot;
+npm ERR! node v5.0.0
+npm ERR! npm  v3.3.6
+npm ERR! code E403
+
+npm ERR! &amp;quot;You cannot publish over the previously published version 0.1.0.&amp;quot; : guidify
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Versiyon güncelleme yapıp denediğimizde yeni versiyonumuz npm’e ulaşmış oluyor.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;⏣ npm publish
++ guidify@0.1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Beta versiyonlamak&lt;/strong&gt; için de &lt;code&gt;-beta&lt;/code&gt; takısını kullanabilirsiniz. Bu, modülünüzün latest versiyonu olarak kabul edilmeyecek ve modülünüz &lt;code&gt;npm i -S guidify&lt;/code&gt;diye çağırıldığında en son stable versiyonu inecektir. Eğer beta sürümünü kullanmak isterseniz &lt;code&gt;npm i -S guidify@beta&lt;/code&gt; olarak indirebilirsiniz.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Not: Beta versiyonu çıkarken &lt;code&gt;npm publish --tag beta&lt;/code&gt; publish işlemini beta olarak tagliyoruz.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;⏣ npm publish --tag beta
++ guidify@1.1.0-beta.0
+
+npm i -S guidify@beta
+└── guidify@1.1.0-beta.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;npm info&lt;/code&gt; ile modülünüzün bilgilerine ulaşabilirsiniz. Aşağıda gördüğünüz gibi &lt;code&gt;&amp;#39;dist-tags&amp;#39;: { latest: &amp;#39;1.1.1&amp;#39;, beta: &amp;#39;1.1.1-beta.0&amp;#39; }&lt;/code&gt; dist-tags kısmına beta versiyonunu ekledi.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{ name: &amp;#39;guidify&amp;#39;,
+  time:
+   { modified: &amp;#39;2015-12-13T12:25:46.912Z&amp;#39;,
+     created: &amp;#39;2015-12-13T11:08:34.780Z&amp;#39;,
+     &amp;#39;0.1.0&amp;#39;: &amp;#39;2015-12-13T11:08:34.780Z&amp;#39;,
+     &amp;#39;0.1.1&amp;#39;: &amp;#39;2015-12-13T11:41:04.164Z&amp;#39;,
+     &amp;#39;1.0.1&amp;#39;: &amp;#39;2015-12-13T11:59:07.267Z&amp;#39;,
+     &amp;#39;1.1.0&amp;#39;: &amp;#39;2015-12-13T12:01:49.774Z&amp;#39;,
+     &amp;#39;1.1.0-beta.0&amp;#39;: &amp;#39;2015-12-13T12:02:47.048Z&amp;#39;,
+     &amp;#39;1.1.1&amp;#39;: &amp;#39;2015-12-13T12:25:08.334Z&amp;#39;,
+     &amp;#39;1.1.1-beta.0&amp;#39;: &amp;#39;2015-12-13T12:25:46.912Z&amp;#39; },
+  maintainers: [ &amp;#39;arifcakiroglu &amp;lt;cakirogluarif@gmail.com&amp;gt;&amp;#39; ],
+  &amp;#39;dist-tags&amp;#39;: { latest: &amp;#39;1.1.1&amp;#39;, beta: &amp;#39;1.1.1-beta.0&amp;#39; },
+  description: &amp;#39;Globally unique identifier&amp;#39;,
+  versions: [ &amp;#39;1.1.0&amp;#39;, &amp;#39;1.1.1&amp;#39; ],
+  homepage: &amp;#39;https://github.com/arifcakiroglu/guidify#readme&amp;#39;,
+  keywords: [ &amp;#39;unique&amp;#39;, &amp;#39;guid&amp;#39;, &amp;#39;guidify&amp;#39; ],
+  repository:
+   { type: &amp;#39;git&amp;#39;,
+     url: &amp;#39;git+https://github.com/arifcakiroglu/guidify.git&amp;#39; },
+  author: &amp;#39;Arif Cakiroglu &amp;lt;cakirogluarif@gmail.com&amp;gt;&amp;#39;,
+  bugs: { url: &amp;#39;https://github.com/arifcakiroglu/guidify/issues&amp;#39; },
+  license: &amp;#39;MIT&amp;#39;,
+  readmeFilename: &amp;#39;README.md&amp;#39;,
+  version: &amp;#39;1.1.1&amp;#39;,
+  main: &amp;#39;index.js&amp;#39;,
+  scripts: { test: &amp;#39;mocha -R spec -u tdd tests/*.js&amp;#39; },
+  devDependencies: { mocha: &amp;#39;~1.14.0&amp;#39; },
+  gitHead: &amp;#39;8bae71a00fdb58a085346f14e3882cd6f6dad7b8&amp;#39;,
+  dist:
+   { shasum: &amp;#39;6e5fc5382effeab16753c4eedad0c55ddb28f072&amp;#39;,
+     tarball: &amp;#39;http://registry.npmjs.org/guidify/-/guidify-1.1.1.tgz&amp;#39; },
+  directories: {} }
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;semantik-versiyonlamak&quot;&gt;Semantik versiyonlamak&lt;/h3&gt;
+&lt;p&gt;Örnek kod:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;test = {
+  init: function(){
+    this.mesasge = &amp;#39;howoryu :)&amp;#39;
+    return this;
+  },
+  get: function(){
+    console.warn(this.message;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;1&lt;/strong&gt;.0.1 &lt;br&gt;
+ ^ MAJOR version: Uygulamanızın kullanıldığı yerlerde problem yaratabilecek değişikliklerin yapıldığı, genel değişikliklerin versiyonlanması için kullanılır.&lt;/p&gt;
+&lt;p&gt; Yukarıdaki kod parçaçığı üzerinden gidecek olursak örneğin:&lt;/p&gt;
+&lt;p&gt; &lt;code&gt;get&lt;/code&gt; methodunu &lt;code&gt;getMessage&lt;/code&gt; diye değiştirdiğinizde versiyonlamada köklü bir değişiklik yapıyorsunuz demektir. Önceki kullanımda get olarak kullanılan method, versiyon güncelleme ile artık programı kullanılamaz hale getirecektir.&lt;/p&gt;
+&lt;p&gt; 1.&lt;strong&gt;0&lt;/strong&gt;.1 &lt;br&gt;
+—^ MINOR version: Uygulamanızın kullanımını kökten değiştirmeyecek ama yeni özellik olarak ekleyeceğiniz farklıklar için kullanılır.&lt;/p&gt;
+&lt;p&gt;Örneğin: &lt;code&gt;get&lt;/code&gt; methodu gibi bir de &lt;code&gt;set&lt;/code&gt;methodu eklediğimizi düşünelim. Bu aşamada kullanıcılar uygulamanızda artık yeni bir özelliğin geldiğini bileceklerdir.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;set: function(args){
+  this.message = args
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.0.&lt;strong&gt;1&lt;/strong&gt; &lt;br&gt;
+—–^ PATCH version: Uygulamanızda ki bug fixler için kullanılan kısım. yaptığınız herhangi bir problemi giderip versiyonlamanızı yapabilirsiniz.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;get: function(){
+  // console.warn(this.message;
+  console.warn(this.message);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Semantik versiyonlama hakkında daha fazla bilgiye &lt;a href=&quot;http://semver.org&quot;&gt;buradan&lt;/a&gt;  ulaşabilirsiniz.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sorularınız olursa yorum yapmaktan çekinmeyiniz efenim, saygılar.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Nodejs REPL(Read-Eval-Print-Loop)</title>
       <link>http://nodejs-dersleri.github.io/articles/nodejs-read-eval-print-loop/</link>
