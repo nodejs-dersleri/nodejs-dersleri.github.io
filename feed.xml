@@ -14,7 +14,7 @@
       <pubDate>Sun, 13 Dec 2015 00:30:00 +0200</pubDate>
       <guid isPermaLink="true">http://nodejs-dersleri.github.io/articles/npm-modul-yapimi-2/</guid>
       <author></author>
-      <description>&lt;p&gt;Yapmış olduğumuz modülü npm’e register edip semantik versiyonlamaya gözatacağız.
+      <description>&lt;p&gt;Yapmış olduğumuz modülü npm’e register edip semantik versiyonlamaya göz atacağız.
 Semantik versiyonlama hakkında daha fazla bilgiye &lt;a href=&quot;http://semver.org&quot;&gt;buradan&lt;/a&gt; ulaşabilirsiniz.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;img src=&quot;/articles/npm-modul-yapimi-2/npm-modul-yapimi-2.png&quot; alt=&quot;modul info&quot;&gt;&lt;/p&gt;
